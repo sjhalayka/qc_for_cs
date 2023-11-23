@@ -4,10 +4,6 @@
 #include <vector>
 using namespace std;
 
-#include "Eigen/Dense"
-using Eigen::VectorXcf;
-using Eigen::VectorXf;
-
 
 complex<float> get_polar(const complex<float>& in)
 {
