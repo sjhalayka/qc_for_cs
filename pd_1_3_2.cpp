@@ -4,9 +4,6 @@
 #include <vector>
 using namespace std;
 
-#include "Eigen/Dense"
-using Eigen::VectorXcf;
-using Eigen::VectorXf;
 
 int main(void)
 {
