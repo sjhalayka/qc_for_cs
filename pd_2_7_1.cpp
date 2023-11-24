@@ -23,7 +23,7 @@ MatrixXcf KroneckerProduct(const MatrixXcf &A, const MatrixXcf &B)
 		for (size_t j = 0; j < n; j++)
 			for (size_t k = 0; k < p; k++)
 				for (size_t l = 0; l < q; l++)
-					result(i* p + k, j * q + l) = A(i, j) * B(k, l);
+					result(i*p + k, j*q + l) = A(i, j) * B(k, l);
 
 	return result;
 }
