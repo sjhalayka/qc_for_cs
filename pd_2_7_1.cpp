@@ -23,7 +23,7 @@ MatrixXcf KroneckerProduct(const MatrixXcf &A, const MatrixXcf &B)
 		for (size_t j = 0; j < n; j++)
 			for (size_t k = 0; k < p; k++)
 				for (size_t l = 0; l < q; l++)
-					result(i*p + k, j*q + l) = A(i, j) * B(k, l);
+					result(i* p + k, j * q + l) = A(i, j) * B(k, l);
 
 	return result;
 }
@@ -49,9 +49,11 @@ int main(void)
 	B(0, 0) = complex<float>(1.0f / 2.0f, -1.0f / 2.0f);
 	B(0, 1) = complex<float>(2.0f / 2.0f, 2.0f / 2.0f);
 	B(0, 2) = complex<float>(2.0f / 2.0f, -3.0f / 2.0f);
+
 	B(1, 0) = complex<float>(1.0f / 2.0f, -4.0f / 2.0f);
 	B(1, 1) = complex<float>(2.0f / 2.0f, 5.0f / 2.0f);
 	B(1, 2) = complex<float>(3.0f / 2.0f, -6.0f / 2.0f);
+
 	B(2, 0) = complex<float>(1.0f / 2.0f, -7.0f / 2.0f);
 	B(2, 1) = complex<float>(2.0f / 2.0f, 8.0f / 2.0f);
 	B(2, 2) = complex<float>(3.0f / 2.0f, -9.0f / 2.0f);
@@ -59,6 +61,40 @@ int main(void)
 	MatrixXcf C = KroneckerProduct(A, B);
 
 	cout << C << endl;
+
+
+
+/*
+	// See equation 2.168
+	const int n = 2;
+	const int m = 1;
+
+	MatrixXcf A(n, m);
+
+	A(0, 0) = complex<float>(2.0f, 0.0f);
+	A(1, 0) = complex<float>(3.0f, 0.0f);
+
+	const int n_prime = 3;
+	const int m_prime = 1;
+
+	MatrixXcf B(n_prime, m_prime);
+
+	B(0, 0) = complex<float>(4.0f, 0.0f);
+	B(1, 0) = complex<float>(6.0f, 0.0f);
+	B(2, 0) = complex<float>(3.0f, 0.0f);
+
+	MatrixXcf C = KroneckerProduct(A, B);
+
+	// C == [
+	// (8,0)
+	// (12,0)
+	// (6,0)
+	// (12,0)
+	// (18,0)
+	// (9,0) ]
+
+	cout << C << endl;
+*/
 
 	return 0;
 }
