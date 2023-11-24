@@ -6,7 +6,6 @@ using namespace std;
 using Eigen::MatrixXcf;
 
 
-
 // From ChatGPT
 MatrixXcf KroneckerProduct(const MatrixXcf &A, const MatrixXcf &B)
 {
