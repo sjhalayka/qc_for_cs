@@ -1,1 +1,1 @@
-# qc_for_cs
+Quantum Computing for Computer Scientists -- Programming Drills
