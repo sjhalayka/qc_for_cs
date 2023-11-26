@@ -11,7 +11,7 @@ int main(void)
 	const size_t length = input_string.length();
 
 	float total_probability = 0.0f;
-	float shannon_entropy = 0.0f;
+	float binary_shannon_entropy = 0.0f;
 
 	map<char, size_t> input_map;
 
@@ -22,7 +22,9 @@ int main(void)
 	{
 		const float probability = ci->second / static_cast<float>(length);
 		total_probability += probability;
-		shannon_entropy += probability * logf(probability);
+
+		// See Definition 10.1.1, where we use the binary Shannon entropy
+		binary_shannon_entropy += probability * (logf(1.0f / probability) / logf(2.0f));
 
 		// Print out the data
 		cout << "Character: \'" << ci->first << "\', Count: " << ci->second << ", Probability: " << probability << endl;
@@ -37,10 +39,8 @@ int main(void)
 		cout << endl << endl;
 	}
 
-	shannon_entropy = -shannon_entropy;
-
-	cout << "Total probability: " << total_probability << endl; // Should always be 1.0f
-	cout << "Shannon entropy:   " << shannon_entropy << endl;
+	cout << "Total probability:      " << total_probability << endl; // Should always be 1.0f
+	cout << "Binary Shannon entropy: " << binary_shannon_entropy << endl;
 
 	return 0;
 }
