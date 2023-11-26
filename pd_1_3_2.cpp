@@ -5,6 +5,15 @@
 using namespace std;
 
 
+complex<float> get_cartesian(const complex<float>& in)
+{
+	const float r = in.real();
+	const float theta = in.imag();
+
+	return complex<float>(r * cos(theta), r * sin(theta));
+}
+
+
 int main(void)
 {
 	// Read in pixel data from disk
@@ -101,7 +110,9 @@ int main(void)
 		{
 			const size_t index = 4 * (y * size_t(px) + x);
 
-			const complex<float> c(1.95f, 0.4f);
+			const float pi = 4.0f * atanf(1.0f);
+			const complex<float> polar(1.0f/0.5f, pi/3.0f);
+			const complex<float> c = get_cartesian(polar);
 
 			complex<float> pos(grid_x_pos, grid_y_pos);
 
