@@ -10,8 +10,8 @@ int main(void)
 	const string input_string = "Hello world";
 	const size_t length = input_string.length();
 
-	float shannon_entropy = 0.0f;
 	float total_probability = 0.0f;
+	float shannon_entropy = 0.0f;
 
 	map<char, size_t> input_map;
 
@@ -22,25 +22,25 @@ int main(void)
 	{
 		const float probability = ci->second / static_cast<float>(length);
 		total_probability += probability;
+		shannon_entropy += probability * logf(probability);
 
+		// Print out the data
 		cout << "Character: \'" << ci->first << "\', Count: " << ci->second << ", Probability: " << probability << endl;
 
-		// Print out a sideways graph, showing probability
-		const float max_width = 80.0f;
-		const float num_stars = max_width * probability;
+		// Print out a sideways graph, signifying probability
+		const size_t max_width = 80;
+		const size_t num_stars = static_cast<size_t>(max_width * probability);
 
-		for (float j = 0; j < num_stars; j += 1.0f)
+		for (size_t j = 0; j < num_stars; j++)
 			cout << '*';
 
 		cout << endl << endl;
-
-		shannon_entropy += probability * logf(probability);
 	}
 
 	shannon_entropy = -shannon_entropy;
 
+	cout << "Total probability: " << total_probability << endl; // Should always be 1.0f
 	cout << "Shannon entropy:   " << shannon_entropy << endl;
-	cout << "Total probability: " << total_probability << endl;
 
 	return 0;
 }
