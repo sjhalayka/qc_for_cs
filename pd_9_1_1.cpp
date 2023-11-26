@@ -9,9 +9,12 @@ string ascii_caesar_encrypt(const string& input)
 
 	for (size_t i = 0; i < input.size(); i++)
 	{
+		if (input[i] == ' ')
+			continue;
+
 		char c = input[i] + 7;
 
-		if (c != ' ' && c > 'Z')
+		if (c > 'Z')
 			c -= 26;
 
 		ret[i] = c;
@@ -26,9 +29,12 @@ string ascii_caesar_decrypt(const string& input)
 
 	for (size_t i = 0; i < input.size(); i++)
 	{
+		if (input[i] == ' ')
+			continue;
+
 		char c = input[i] - 7;
 
-		if (c != ' ' && c < 'A')
+		if (c < 'A')
 			c += 26;
 
 		ret[i] = c;
