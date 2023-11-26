@@ -7,8 +7,8 @@ using namespace std;
 
 int main(void)
 {
-    const string input_string = "Hello world";
-    const float length = static_cast<float>(input_string.length());
+	const string input_string = "Hello world";
+	const float length = static_cast<float>(input_string.length());
 
 	float shannon_entropy = 0.0f;
 
@@ -37,7 +37,7 @@ int main(void)
 
 	shannon_entropy = -shannon_entropy;
 
-    cout << "shannon_entropy: " << shannon_entropy << endl;
+	cout << "shannon_entropy: " << shannon_entropy << endl;
 
-    return 0;
+	return 0;
 }
