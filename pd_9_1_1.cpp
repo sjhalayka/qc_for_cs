@@ -42,12 +42,13 @@ int main(void)
 {
 	// One could use RSA without padding, which is technically a glorified Caesar cipher
 	// Instead, we will implement the encryption/decryption wheel in Figure 9.2
+	// Also see Exercise 9.1.2
 
-	string plaintext = "HELLO WORLD";
-	string ciphertext = ascii_caesar_encrypt(plaintext);
-	string decrypted_text = ascii_caesar_decrypt(ciphertext);
+	string plaintext = "QUANTUM CRYPTOGRAPHY IS FUN";
+	string encrypted_text = ascii_caesar_encrypt(plaintext);
+	string decrypted_text = ascii_caesar_decrypt(encrypted_text);
 
-	cout << plaintext << endl << ciphertext << endl << decrypted_text << endl;
+	cout << plaintext << endl << encrypted_text << endl << decrypted_text << endl;
 
 	return 0;
 }
