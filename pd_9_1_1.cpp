@@ -44,10 +44,10 @@ int main(void)
 	// Instead, we will implement the encryption/decryption wheel in Figure 9.2
 
 	string plaintext = "HELLO WORLD";
-	string encrypted_text = ascii_caesar_encrypt(plaintext);
-	string decrypted_text = ascii_caesar_decrypt(encrypted_text);
+	string ciphertext = ascii_caesar_encrypt(plaintext);
+	string decrypted_text = ascii_caesar_decrypt(ciphertext);
 
-	cout << plaintext << endl << encrypted_text << endl << decrypted_text << endl;
+	cout << plaintext << endl << ciphertext << endl << decrypted_text << endl;
 
 	return 0;
 }
