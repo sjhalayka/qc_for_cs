@@ -8,9 +8,10 @@ using namespace std;
 int main(void)
 {
 	const string input_string = "Hello world";
-	const float length = static_cast<float>(input_string.length());
+	const size_t length = input_string.length();
 
 	float shannon_entropy = 0.0f;
+	float total_probability = 0.0f;
 
 	map<char, size_t> input_map;
 
@@ -19,7 +20,8 @@ int main(void)
 
 	for (map<char, size_t>::const_iterator ci = input_map.begin(); ci != input_map.end(); ci++)
 	{
-		const float probability = ci->second / length;
+		const float probability = ci->second / static_cast<float>(length);
+		total_probability += probability;
 
 		cout << "Character: \'" << ci->first << "\', Count: " << ci->second << ", Probability: " << probability << endl;
 
@@ -37,7 +39,8 @@ int main(void)
 
 	shannon_entropy = -shannon_entropy;
 
-	cout << "shannon_entropy: " << shannon_entropy << endl;
+	cout << "Shannon entropy:   " << shannon_entropy << endl;
+	cout << "Total probability: " << total_probability << endl;
 
 	return 0;
 }
