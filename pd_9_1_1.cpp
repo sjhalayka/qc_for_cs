@@ -48,7 +48,6 @@ int main(void)
 {
 	// One could use RSA without padding, which is technically a glorified Caesar cipher
 	// Instead, we will implement the encryption/decryption wheel in Figure 9.2
-	// Also see Exercise 9.1.2
 
 	string plaintext = "QUANTUM CRYPTOGRAPHY IS FUN";
 	string ciphertext = ascii_caesar_encrypt(plaintext);
