@@ -2,6 +2,35 @@
 #include <string>
 using namespace std;
 
+// One could use RSA without padding, which is technically a glorified Caesar cipher
+
+// Instead, we will implement the encryption/decryption wheel in Figure 9.2:
+// A -> H
+// B ->	I
+// C -> J
+// D -> K
+// E -> L
+// F -> M
+// G -> N
+// H -> O
+// I -> P
+// J -> Q
+// K -> R
+// L -> S
+// M -> T
+// N -> U
+// O -> V
+// P -> W
+// Q -> X
+// R -> Y
+// S -> Z
+// T -> A
+// U -> B
+// V -> C
+// W -> D
+// X -> E
+// Y -> F
+// Z -> G
 
 string ascii_caesar_encrypt(const string& input)
 {
@@ -46,10 +75,7 @@ string ascii_caesar_decrypt(const string& input)
 
 int main(void)
 {
-	// One could use RSA without padding, which is technically a glorified Caesar cipher
-	// Instead, we will implement the encryption/decryption wheel in Figure 9.2
-
-	string plaintext = "QUANTUM CRYPTOGRAPHY IS FUN";
+	string plaintext = "QUANTUM COMPUTING IS FUN";
 	string ciphertext = ascii_caesar_encrypt(plaintext);
 	string decrypted_text = ascii_caesar_decrypt(ciphertext);
 
