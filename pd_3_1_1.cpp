@@ -128,6 +128,8 @@ int main(void)
 	// Get M^k path connectivity, where k = 2, 3, and 6
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
+	//cout << endl;
+	//cout << get_mk(n, 1, adjacency_matrix) << endl << endl;
 	//cout << get_mk(n, 2, adjacency_matrix) << endl << endl;
 	//cout << get_mk(n, 3, adjacency_matrix) << endl << endl;
 	//cout << get_mk(n, 6, adjacency_matrix) << endl << endl;
