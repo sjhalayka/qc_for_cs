@@ -58,11 +58,11 @@ public:
 				}
 			}
 
-			// Clean up unneeded data
+			// Clean up previous vector of paths
 			paths[l - 1].clear();
 		}
 
-		// It there at least match?
+		// It there at least one match in the last vector of paths?
 		for (size_t i = 0; i < paths[paths.size() - 1].size(); i++)
 		{
 			int final_start = paths[paths.size() - 1][i].vertices[0];
