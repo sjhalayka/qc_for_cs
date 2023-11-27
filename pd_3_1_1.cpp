@@ -27,29 +27,18 @@ public:
 	bool DFS(int start, int end, int length, vector<bool>& visited)
 	{
 		if (start == end && length == 0)
-		{
 			return true;
-		}
 
+		// Path length exceeded, backtrack
 		if (length <= 0)
-		{
-			// Path length exceeded, backtrack
 			return false;
-		}
 
 		visited[start] = true;
 
 		for (int neighbor : adjacency_list[start])
-		{
 			if (!visited[neighbor])
-			{
-				// Recursive DFS call
 				if (DFS(neighbor, end, length - 1, visited))
-				{
 					return true;
-				}
-			}
-		}
 
 		visited[start] = false; // Backtrack
 		return false;
@@ -102,11 +91,6 @@ int main(void)
 {
 	const int n = 6;
 
-	VectorXf state_vector(n); // aka X
-	state_vector <<
-		//6, 2, 1, 5, 3, 10;
-		0, 0, 27, 0, 0, 0;
-
 	MatrixXf adjacency_matrix(n, n); // aka M^1
 	adjacency_matrix <<
 		0, 0, 0, 0, 0, 0,
@@ -118,24 +102,30 @@ int main(void)
 
 	cout << adjacency_matrix << endl << endl;
 
+	VectorXf state_vector(n); // aka X
+	state_vector <<
+		//6, 2, 1, 5, 3, 10;
+		0, 0, 27, 0, 0, 0;
+
 	cout << state_vector.transpose() << endl << endl;
 
+	// Show the 3-cycle that the marbles follow when all marbles start at vertex 2
 	const size_t k = 6;
 
 	for (size_t i = 1; i <= k; i++)
 	{
-		state_vector = adjacency_matrix * state_vector; // Y = MX
+		state_vector = adjacency_matrix * state_vector; // aka Y = MX
 		cout << state_vector.transpose() << endl;
 	}
-
+		
 	// Get M^k path connectivity, where k = 1, 2, 3, and 6
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
-	//cout << endl;
-	//cout << get_mk(n, 1, adjacency_matrix) << endl << endl;
-	//cout << get_mk(n, 2, adjacency_matrix) << endl << endl;
-	//cout << get_mk(n, 3, adjacency_matrix) << endl << endl;
-	//cout << get_mk(n, 6, adjacency_matrix) << endl << endl;
+	cout << endl;
+	cout << get_mk(n, 1, adjacency_matrix) << endl << endl;
+	cout << get_mk(n, 2, adjacency_matrix) << endl << endl;
+	cout << get_mk(n, 3, adjacency_matrix) << endl << endl;
+	cout << get_mk(n, 6, adjacency_matrix) << endl << endl;
 
 	return 0;
 }
