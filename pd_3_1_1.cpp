@@ -115,9 +115,10 @@ int main(void)
 		0, 0, 1, 0, 0, 0,
 		1, 0, 0, 0, 1, 0;
 
+	cout << state_vector << endl;
 	cout << adjacency_matrix << endl << endl;
 
-	const size_t k = 3;
+	const size_t k = 6;
 
 	for (size_t i = 0; i < k; i++)
 		state_vector = adjacency_matrix * state_vector; // y = mx
