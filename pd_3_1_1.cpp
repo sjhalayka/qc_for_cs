@@ -34,6 +34,7 @@ public:
 	{
 		vector<vector<path>> paths(length);
 
+		// Start paths
 		for (int neighbor : adjacency_list[start])
 		{
 			path p;
@@ -42,6 +43,7 @@ public:
 			paths[0].push_back(p);
 		}
 
+		// Do next steps in paths
 		for (int l = 1; l < length; l++)
 		{
 			for (size_t i = 0; i < paths[l - 1].size(); i++)
@@ -60,6 +62,7 @@ public:
 			paths[l - 1].clear();
 		}
 
+		// It is a match?
 		for (size_t i = 0; i < paths[paths.size() - 1].size(); i++)
 		{
 			int final_start = paths[paths.size() - 1][i].vertices[0];
