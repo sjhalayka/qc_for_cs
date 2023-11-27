@@ -15,7 +15,7 @@ public:
 };
 
 
-// From ChatGPT
+// Modified code, originally from ChatGPT
 class graph
 {
 private:
