@@ -8,6 +8,13 @@ using Eigen::VectorXf;
 using Eigen::MatrixXf;
 
 
+class path
+{
+public:
+	vector<int> vertices;
+};
+
+
 // From ChatGPT
 class graph
 {
@@ -23,36 +30,46 @@ public:
 		adjacency_list[v].push_back(u);
 	}
 
-	// Depth-first search
-	bool DFS(int start, int end, int length, vector<bool>& visited)
-	{
-		if (start == end && length == 0)
-			return true;
-
-		// If self-connected
-		for (int neighbor : adjacency_list[start])
-			if (neighbor == start)
-				return true;
-
-		// Path length exceeded, backtrack
-		if (length <= 0)
-			return false;
-
-		visited[start] = true;
-
-		for (int neighbor : adjacency_list[start])
-			if (!visited[neighbor])
-				if (DFS(neighbor, end, length - 1, visited))
-					return true;
-
-		visited[start] = false; // Backtrack
-		return false;
-	}
-
 	bool find_path(int start, int end, int length)
 	{
-		vector<bool> visited(vertices, false);
-		return DFS(start, end, length, visited);
+		vector<vector<path>> paths(length);
+
+		for (int neighbor : adjacency_list[start])
+		{
+			path p;
+			p.vertices.push_back(start);
+			p.vertices.push_back(neighbor);
+			paths[0].push_back(p);
+		}
+
+		for (int l = 1; l < length; l++)
+		{
+			for (size_t i = 0; i < paths[l - 1].size(); i++)
+			{
+				const int last_vert = paths[l - 1][i].vertices[paths[l - 1][i].vertices.size() - 1];
+
+				for (int neighbor : adjacency_list[last_vert])
+				{
+					path p = paths[l - 1][i];
+					p.vertices.push_back(neighbor);
+					paths[l].push_back(p);
+				}
+			}
+
+			// Clean up unneeded data
+			paths[l - 1].clear();
+		}
+
+		for (size_t i = 0; i < paths[paths.size() - 1].size(); i++)
+		{
+			int final_start = paths[paths.size() - 1][i].vertices[0];
+			int final_end = paths[paths.size() - 1][i].vertices[paths[paths.size() - 1][i].vertices.size() - 1];
+	
+			if (final_start == start && final_end == end)
+				return true;
+		}
+
+		return false;
 	}
 };
 
