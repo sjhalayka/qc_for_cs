@@ -18,9 +18,8 @@ private:
 public:
     graph(int v) : vertices(v), adjacency_list(v) {}
 
-    void add_edge(int u, int v)
+    void add_half_edge(const int u, const int v)
     {
-        adjacency_list[u].push_back(v);
         adjacency_list[v].push_back(u);
     }
 
@@ -70,7 +69,7 @@ bool get_path(const int n, const int start, const int end, const int k, const Ma
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             if (adjacency_matrix(i, j))
-                g.add_edge(i, j);
+                g.add_half_edge(i, j);
 
     if (g.find_path(start, end, k))
         return true;
@@ -89,7 +88,7 @@ MatrixXf get_mk(const int n, const int k, const MatrixXf& adjacency_matrix)
     {
         for (int j = 0; j < n; j++)
         {
-            // see footnote 1 at the bottom of page 76
+            // See footnote 1 at the bottom of page 76,
             // where it says to trace from j to i, instead from i to j
             ret(i, j) = get_path(n, j, i, k, adjacency_matrix);
         }
@@ -121,13 +120,17 @@ int main(void)
 	const size_t k = 3;
 
 	for (size_t i = 0; i < k; i++)
-		state_vector = adjacency_matrix * state_vector; // Y = MX
+		state_vector = adjacency_matrix * state_vector; // y = mx
 
 	cout << state_vector << endl;
 
 
-    // Get M^k path connectivity, where k = 2
-    //cout << get_mk(n, 2, adjacency_matrix);
+    // Get M^k path connectivity, where k = 2, 3, and 6
+    // See equation 3.11 on page 78
+    // See exercise 3.1.2 on page 78
+    //cout << get_mk(n, 2, adjacency_matrix) << endl << endl;
+    //cout << get_mk(n, 3, adjacency_matrix) << endl << endl;
+    //cout << get_mk(n, 6, adjacency_matrix) << endl << endl;
 
 	return 0;
 }
