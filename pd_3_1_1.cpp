@@ -125,7 +125,7 @@ int main(void)
 	cout << state_vector << endl;
 
 
-	// Get M^k path connectivity, where k = 2, 3, and 6
+	// Get M^k path connectivity, where k = 1, 2, 3, and 6
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
 	//cout << endl;
