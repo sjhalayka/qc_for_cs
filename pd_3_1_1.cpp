@@ -7,8 +7,6 @@ using namespace std;
 using Eigen::VectorXf;
 using Eigen::MatrixXf;
 
-using namespace std;
-
 
 // From ChatGPT
 class graph
