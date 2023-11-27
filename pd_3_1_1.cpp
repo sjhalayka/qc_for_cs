@@ -29,6 +29,11 @@ public:
 		if (start == end && length == 0)
 			return true;
 
+		// If self-connected
+		for (int neighbor : adjacency_list[start])
+			if (neighbor == start)
+				return true;
+
 		// Path length exceeded, backtrack
 		if (length <= 0)
 			return false;
@@ -117,7 +122,7 @@ int main(void)
 		state_vector = adjacency_matrix * state_vector; // aka Y = MX
 		cout << state_vector.transpose() << endl;
 	}
-		
+
 	// Get M^k path connectivity, where k = 1, 2, 3, and 6
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
