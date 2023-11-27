@@ -105,6 +105,7 @@ int main(void)
 	VectorXf state_vector(n); // aka X
 	state_vector <<
 		6, 2, 1, 5, 3, 10;
+		//0, 0, 27, 0, 0, 0;
 
 	MatrixXf adjacency_matrix(n, n); // aka M^1
 	adjacency_matrix <<
@@ -115,16 +116,17 @@ int main(void)
 		0, 0, 1, 0, 0, 0,
 		1, 0, 0, 0, 1, 0;
 
-	cout << state_vector << endl;
 	cout << adjacency_matrix << endl << endl;
+
+	cout << state_vector.transpose() << endl << endl;
 
 	const size_t k = 6;
 
-	for (size_t i = 0; i < k; i++)
-		state_vector = adjacency_matrix * state_vector; // y = mx
-
-	cout << state_vector << endl;
-
+	for (size_t i = 1; i <= k; i++)
+	{
+		state_vector = adjacency_matrix * state_vector; // Y = MX
+		cout << state_vector.transpose() << endl;
+	}
 
 	// Get M^k path connectivity, where k = 1, 2, 3, and 6
 	// See equation 3.11 on page 78
