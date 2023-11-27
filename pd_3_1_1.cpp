@@ -104,8 +104,8 @@ int main(void)
 
 	VectorXf state_vector(n); // aka X
 	state_vector <<
-		6, 2, 1, 5, 3, 10;
-		//0, 0, 27, 0, 0, 0;
+		//6, 2, 1, 5, 3, 10;
+		0, 0, 27, 0, 0, 0;
 
 	MatrixXf adjacency_matrix(n, n); // aka M^1
 	adjacency_matrix <<
