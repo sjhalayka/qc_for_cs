@@ -28,6 +28,7 @@ public:
 		adjacencies[v].push_back(u);
 	}
 
+	// This function could use some optimization
 	bool find_path(int start, int end, int length)
 	{
 		vector<vector<path>> paths(length);
