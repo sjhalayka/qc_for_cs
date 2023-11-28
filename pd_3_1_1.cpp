@@ -90,7 +90,7 @@ bool get_path(const int n, const int start, const int end, const int k, const Ma
 	return false;
 }
 
-MatrixXf get_mk(const int n, const int k, const MatrixXf& adjacency_matrix)
+MatrixXf get_mk_pathfinder(const int n, const int k, const MatrixXf& adjacency_matrix)
 {
 	if (k == 1)
 		return adjacency_matrix;
@@ -109,6 +109,23 @@ MatrixXf get_mk(const int n, const int k, const MatrixXf& adjacency_matrix)
 
 	return ret;
 }
+
+
+
+MatrixXf get_mk_mul(const int n, const int k, const MatrixXf& adjacency_matrix)
+{
+	if (k == 1)
+		return adjacency_matrix;
+
+	MatrixXf ret(n, n);
+	ret = adjacency_matrix;
+
+	for (int i = 1; i < k; i++)
+		ret = ret * adjacency_matrix;
+
+	return ret;
+}
+
 
 
 int main(void)
@@ -149,7 +166,7 @@ int main(void)
 
 	// Show that M^3 == M^6 == M^9
 	for (int i = 1; i <= k; i++)
-		cout << "M^" << i << " = " << endl << get_mk(n, i, adjacency_matrix) << endl << endl;
+		cout << "M^" << i << " = " << endl << get_mk_mul(n, i, adjacency_matrix) << endl << endl;
 
 	return 0;
 }
