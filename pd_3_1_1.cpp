@@ -14,20 +14,18 @@ public:
 	vector<int> vertices;
 };
 
-
 // Modified code, originally from ChatGPT
 class graph
 {
 private:
-	int vertices;
-	vector<vector<int>> adjacency_list;
+	vector<vector<int>> adjacencies;
 
 public:
-	graph(int v) : vertices(v), adjacency_list(v) {}
+	graph(int v) : adjacencies(v) {}
 
 	void add_half_edge(const int u, const int v)
 	{
-		adjacency_list[v].push_back(u);
+		adjacencies[v].push_back(u);
 	}
 
 	bool find_path(int start, int end, int length)
@@ -35,7 +33,7 @@ public:
 		vector<vector<path>> paths(length);
 
 		// Seed paths
-		for (int neighbor : adjacency_list[start])
+		for (int neighbor : adjacencies[start])
 		{
 			path p;
 			p.vertices.push_back(start);
@@ -50,7 +48,7 @@ public:
 			{
 				const int last_vert = paths[l - 1][i].vertices[paths[l - 1][i].vertices.size() - 1];
 
-				for (int neighbor : adjacency_list[last_vert])
+				for (int neighbor : adjacencies[last_vert])
 				{
 					path p = paths[l - 1][i];
 					p.vertices.push_back(neighbor);
@@ -146,10 +144,11 @@ int main(void)
 	// Get M^k path connectivity, where k = 1 through 6
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
-	cout << endl;
 
-	for (int i = 1; i <= k; i++)
-		cout << "M^" << i << " = " << endl << get_mk(n, i, adjacency_matrix) << endl << endl;
+	//cout << endl;
+
+	//for (int i = 1; i <= k; i++)
+	//	cout << "M^" << i << " = " << endl << get_mk(n, i, adjacency_matrix) << endl << endl;
 
 	return 0;
 }
