@@ -99,7 +99,7 @@ MatrixXf get_mk(const int n, const int k, const MatrixXf& adjacency_matrix)
 	ret = adjacency_matrix;
 
 	for (int i = 1; i < k; i++)
-		ret = ret * ret;
+		ret = ret * adjacency_matrix;
 
 	return ret;
 }
