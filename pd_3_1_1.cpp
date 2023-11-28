@@ -29,7 +29,7 @@ public:
 	}
 
 	// This function could use some optimization
-	bool find_path(int start, int end, int length)
+	bool find_path(const int start, const int end, const int length)
 	{
 		vector<vector<path>> paths(length);
 
@@ -42,7 +42,7 @@ public:
 			paths[0].push_back(p);
 		}
 
-		// Do next vector of paths
+		// Do next vector	 of paths
 		for (int l = 1; l < length; l++)
 		{
 			for (size_t i = 0; i < paths[l - 1].size(); i++)
