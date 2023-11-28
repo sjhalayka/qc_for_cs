@@ -128,12 +128,11 @@ int main(void)
 	VectorXf state_vector(n); // aka X
 	state_vector <<
 		6, 2, 1, 5, 3, 10;
-		//0, 0, 27, 0, 0, 0;
+		//0, 0, 27, 0, 0, 0; // Show the 3-cycle that the marbles follow when all 27 marbles start at vertex 2
 
 	cout << state_vector.transpose() << endl << endl;
 
-	// Show the 3-cycle that the marbles follow when all marbles start at vertex 2
-	const size_t k = 6;
+	const size_t k = 9;
 
 	for (int i = 1; i <= k; i++)
 	{
@@ -145,10 +144,11 @@ int main(void)
 	// See equation 3.11 on page 78
 	// See exercise 3.1.2 on page 78
 
-	//cout << endl;
+	cout << endl;
 
-	//for (int i = 1; i <= k; i++)
-	//	cout << "M^" << i << " = " << endl << get_mk(n, i, adjacency_matrix) << endl << endl;
+	// Show that M^3 == M^6 == M^9
+	for (int i = 1; i <= k; i++)
+		cout << "M^" << i << " = " << endl << get_mk(n, i, adjacency_matrix) << endl << endl;
 
 	return 0;
 }
