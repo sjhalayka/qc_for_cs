@@ -42,7 +42,7 @@ public:
 			paths[0].push_back(p);
 		}
 
-		// Do next vector	 of paths
+		// Do next vector of paths
 		for (int l = 1; l < length; l++)
 		{
 			for (size_t i = 0; i < paths[l - 1].size(); i++)
