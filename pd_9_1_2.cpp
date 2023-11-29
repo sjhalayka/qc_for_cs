@@ -1,25 +1,23 @@
 #include <iostream>
 #include <vector>
+#include <bitset>
 using namespace std;
 
 
 int main(void)
 {
-	vector<bool> message_bits = { 1, 0, 1, 0, 0, 1 };
-	vector<bool> one_time_pad_bits = { 0, 1, 0, 1, 0, 1 };
+	const int n = 6;
 
-	vector<bool> encrypted_bits;
+	bitset<n> message_bits("101001");
+	bitset<n> one_time_pad_bits("010101");
 
-	for (size_t i = 0; i < message_bits.size(); i++)
-		encrypted_bits.push_back(message_bits[i] ^ one_time_pad_bits[i]);
+	cout << "Message bits:      " << message_bits << endl;
+	cout << "One time pad bits: " << one_time_pad_bits << endl;
 
-	vector<bool> decrypted_bits;
+	bitset<n> encrypted_bits = message_bits ^ one_time_pad_bits;
+	bitset<n> decrypted_bits = encrypted_bits ^ one_time_pad_bits;
 
-	for (size_t i = 0; i < encrypted_bits.size(); i++)
-		decrypted_bits.push_back(encrypted_bits[i] ^ one_time_pad_bits[i]);
-
-	for (size_t i = 0; i < decrypted_bits.size(); i++)
-		cout << static_cast<unsigned short int>(decrypted_bits[i]);
+	cout << "Encrypted bits:    " << encrypted_bits << endl << "Decrypted bits:    " << decrypted_bits << endl;
 
 	return 0;
 }
