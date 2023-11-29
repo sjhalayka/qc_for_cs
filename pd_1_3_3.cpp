@@ -5,17 +5,17 @@
 using namespace std;
 
 
-complex<float> get_polar(const complex<float>& in)
-{
-	return complex<float>(abs(in), atan2f(in.imag(), in.real()));
-}
-
 complex<float> get_cartesian(const complex<float>& in)
 {
 	const float r = in.real();
 	const float theta = in.imag();
 
 	return complex<float>(r * cos(theta), r * sin(theta));
+}
+
+complex<float> get_polar(const complex<float>& in)
+{
+	return complex<float>(abs(in), atan2f(in.imag(), in.real()));
 }
 
 
@@ -115,32 +115,46 @@ int main(void)
 		{
 			const size_t index = 4 * (y * size_t(px) + x);
 
-			const complex<float> c(1.95f, 0.4f);
+			const float pi = 4.0f * atanf(1.0f);
+			const complex<float> polar(sqrtf(2.0), pi / 4.0f);
+			const complex<float> c = get_cartesian(polar);
 
 			complex<float> pos(grid_x_pos, grid_y_pos);
 
-			// pos = pos / c;
-			// pos = pos * c;
+			//pos = pos / c;
+			//pos = pos * c; // Scale and rotate the image
 			pos = get_polar(pos);
+
+			bool out_of_bounds = false;
 
 			const float x_location = pos.real() - curr_x_min;
 			size_t x_index = static_cast<size_t>(static_cast<float>(px - 1) * (x_location / x_extent));
 
 			if (x_index >= static_cast<size_t>(px))
-				x_index = static_cast<size_t>(px - 1);
+				out_of_bounds = true;
 
 			const float y_location = pos.imag() - curr_y_min;
 			size_t y_index = static_cast<size_t>(static_cast<float>(py - 1) * (y_location / y_extent));
 
 			if (y_index >= static_cast<size_t>(py))
-				y_index = static_cast<size_t>(py - 1);
+				out_of_bounds = true;
 
-			const size_t new_index = 4 * (y_index * px + x_index);
+			if (out_of_bounds)
+			{
+				temp_data[index + 0] = 0;
+				temp_data[index + 1] = 0;
+				temp_data[index + 2] = 0;
+				temp_data[index + 3] = 255;
+			}
+			else
+			{
+				const size_t new_index = 4 * (y_index * size_t(px) + x_index);
 
-			temp_data[index + 0] = pixel_data[new_index + 0];
-			temp_data[index + 1] = pixel_data[new_index + 1];
-			temp_data[index + 2] = pixel_data[new_index + 2];
-			temp_data[index + 3] = 255;
+				temp_data[index + 0] = pixel_data[new_index + 0];
+				temp_data[index + 1] = pixel_data[new_index + 1];
+				temp_data[index + 2] = pixel_data[new_index + 2];
+				temp_data[index + 3] = 255;
+			}
 		}
 	}
 
