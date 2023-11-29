@@ -13,7 +13,7 @@ int main(void)
 	vector<string> typical_bit_strings;
 
 	const int n = 8;
-	const int typical_n_ones = static_cast<int>(floorf(static_cast<float>(n)*pdf_1));
+	const size_t typical_n_ones = static_cast<int>(floorf(static_cast<float>(n)*pdf_1));
 
 	cout << "Typical count of ones = " << typical_n_ones << endl;
 
@@ -21,13 +21,7 @@ int main(void)
 	{
 		bitset<n> b(i);
 
-		int one_count = 0;
-
-		for (size_t j = 0; j < n; j++)
-			if (b[j] == 1)
-				one_count++;
-
-		if (one_count == typical_n_ones)
+		if (b.count() == typical_n_ones)
 			typical_bit_strings.push_back(b.to_string());
 	}
 
