@@ -75,7 +75,7 @@ string ascii_caesar_encrypt(const string& input)
 
 int main(void)
 {
-	string ciphertext = "JNTGMNF VHFINMBGZ BL YNG";
+	const string ciphertext = "JNTGMNF VHFINMBGZ BL YNG";
 
 	cout << ciphertext << endl;
 	cout << ascii_caesar_decrypt(ciphertext) << endl;
