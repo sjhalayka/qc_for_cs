@@ -32,7 +32,7 @@ using namespace std;
 // Y -> F
 // Z -> G
 
-string ascii_caesar_encrypt(const string& input)
+string ascii_caesar_decrypt(const string& input)
 {
 	string ret = input;
 
@@ -52,7 +52,7 @@ string ascii_caesar_encrypt(const string& input)
 	return ret;
 }
 
-string ascii_caesar_decrypt(const string& input)
+string ascii_caesar_encrypt(const string& input)
 {
 	string ret = input;
 
@@ -75,11 +75,11 @@ string ascii_caesar_decrypt(const string& input)
 
 int main(void)
 {
-	string plaintext = "QUANTUM COMPUTING IS FUN";
-	string ciphertext = ascii_caesar_encrypt(plaintext);
-	string decrypted_text = ascii_caesar_decrypt(ciphertext);
+	string ciphertext = "JNTGMNF VHFINMBGZ BL YNG";
 
-	cout << plaintext << endl << ciphertext << endl << decrypted_text << endl;
+	cout << ciphertext << endl;
+	cout << ascii_caesar_decrypt(ciphertext) << endl;
+	cout << ascii_caesar_encrypt(ascii_caesar_decrypt(ciphertext)) << endl;
 
 	return 0;
 }
