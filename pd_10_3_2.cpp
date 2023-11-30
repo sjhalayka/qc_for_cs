@@ -7,7 +7,7 @@
 using namespace std;
 
 
-// Modified heavily from:
+// Modified from:
 // https://gist.github.com/pwxcoo/72d7d3c5c3698371c21e486722f9b34b
 //
 // also see:
