@@ -62,52 +62,17 @@ void encode(Node* root, string str,
 	encode(root->right, str + "1", huffmanCode);
 }
 
-// traverse the Huffman Tree and decode the encoded string
-void decode(Node* root, int& index, string str, string &decoded_string)
+string str_right(string& str, size_t pos)
 {
-	if (root == nullptr)
-		return;
-
-	// found a leaf node
-	if (!root->left && !root->right)
-	{
-		decoded_string += root->ch;
-		return;
-	}
-
-	index++;
-
-	if (str[index] == '0')
-		decode(root->left, index, str, decoded_string);
-	else
-		decode(root->right, index, str, decoded_string);
-}
-
-
-string str_left(string& str, int pos)
-{
-	int i;
 	string temp = "";
-	for (i = 0; i < pos; i++)
-	{
+
+	for (size_t i = pos; i < strlen(str.c_str()); i++)
 		temp += str[i];
-	}
 
 	return temp;
 }
 
-string str_right(string& str, int pos)
-{
-	int i;
-	string temp = "";
-	for (i = pos; i < strlen(str.c_str()); i++)
-	{
-		temp += str[i];
-	}
-	return temp;
-}
-
-void decode2(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
+void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
 
@@ -244,7 +209,6 @@ int main()
 	// traverse the Huffman Tree again and this time
 	// decode the encoded string
 
-	cout << "Decoded string is:   ";
 	string decoded_string;
 
 	if (huffman_codes.size() == 1)
@@ -256,17 +220,10 @@ int main()
 	}
 	else
 	{
-		decode2(str, decoded_string, huffman_codes);
-		
-		/*
-		int index = -1;
-
-		while (index < (int)str.size() - 1)
-			decode(root, index, str, decoded_string);	
-		*/
+		decode(str, decoded_string, huffman_codes);
 	}
 
-	cout << decoded_string << endl;
+	cout << "Decoded string is:   " << decoded_string << endl;
 
 	clean_up();
 
