@@ -17,7 +17,7 @@ struct Node
 {
 	char ch;
 	int freq;
-	Node *left, *right;
+	Node* left, * right;
 };
 
 vector<Node*> nodes_to_clean_up;
@@ -93,6 +93,9 @@ void buildHuffmanTree(string text)
 	for (char ch : text)
 		freq[ch]++;
 
+
+
+
 	// Create a priority queue to store live nodes of
 	// Huffman tree;
 	priority_queue<Node*, vector<Node*>, comp> pq;
@@ -107,10 +110,10 @@ void buildHuffmanTree(string text)
 	{
 		// Remove the two nodes of highest priority
 		// (lowest frequency) from the queue
-		Node* left = pq.top(); 
+		Node* left = pq.top();
 		pq.pop();
-		
-		Node* right = pq.top();	
+
+		Node* right = pq.top();
 		pq.pop();
 
 		// Create a new internal node with these two nodes
