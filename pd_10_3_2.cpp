@@ -221,7 +221,7 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 
 int main()
 {
-	string text = "BDFAAAAABC";
+	string text = "BDFAAAAABCG";
 
 	//string encoded_string;
 	unordered_map<char, string> huffman_codes;
