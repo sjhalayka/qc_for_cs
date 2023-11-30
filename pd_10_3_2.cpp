@@ -59,7 +59,7 @@ void encode(Node* root, const string str, unordered_map<char, string>& huffmanCo
 	encode(root->right, str + "1", huffmanCode);
 }
 
-string str_right_trim(string& str, size_t pos)
+string str_trim(string& str, size_t pos)
 {
 	string temp = "";
 
@@ -88,7 +88,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 				if (pair.second == token)
 				{
 					decoded_string += pair.first;
-					encoded_string = str_right_trim(encoded_string, token.length());
+					encoded_string = str_trim(encoded_string, token.length());
 					abort = true;
 					break;
 				}
@@ -170,7 +170,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 
 int main()
 {
-	string text = "BAAAAAC";
+	string text = "CAAABAAC";
 
 	unordered_map<char, string> huffman_codes;
 	Node* root = nullptr;
