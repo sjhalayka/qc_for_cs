@@ -12,12 +12,11 @@ using namespace std;
 // https://www.programiz.com/dsa/huffman-coding
 // https://iq.opengenus.org/huffman-encoding/
 
-
 struct Node
 {
 	char ch;
 	int freq;
-	Node *left, *right;
+	Node* left, * right;
 };
 
 vector<Node*> nodes_to_clean_up;
@@ -63,7 +62,7 @@ void encode(Node* root, string str,
 }
 
 // traverse the Huffman Tree and decode the encoded string
-void decode(Node* root, int& index, string str)
+void decode(Node* root, int& index, string str, string &decoded_string)
 {
 	if (root == nullptr)
 		return;
@@ -71,16 +70,16 @@ void decode(Node* root, int& index, string str)
 	// found a leaf node
 	if (!root->left && !root->right)
 	{
-		cout << root->ch;
+		decoded_string += root->ch;
 		return;
 	}
 
 	index++;
 
 	if (str[index] == '0')
-		decode(root->left, index, str);
+		decode(root->left, index, str, decoded_string);
 	else
-		decode(root->right, index, str);
+		decode(root->right, index, str, decoded_string);
 }
 
 void clean_up(void)
@@ -91,9 +90,9 @@ void clean_up(void)
 		delete nodes_to_clean_up[i];
 }
 
-
-void get_encoded_and_codes(const string &input, string& encoded_string, unordered_map<char, string>& um, Node* &root)
+void get_codes(const string& input, unordered_map<char, string>& um, Node*& root)
 {
+	root = nullptr;
 
 	// count frequency of appearance of each character
 	// and store it in a map
@@ -104,17 +103,11 @@ void get_encoded_and_codes(const string &input, string& encoded_string, unordere
 
 	if (freq.size() == 1)
 	{
-		//string encode;
+		root = getNode(freq.begin()->first, freq.begin()->second, nullptr, nullptr);
+		um[root->ch] = "0";
 
-		//const size_t num_zeroes = freq.begin()->second;
-
-		//for (size_t i = 0; i < num_zeroes; i++)
-		//	encode += '0';
-
-		//return encode;
+		return;
 	}
-
-
 
 	// Create a priority queue to store live nodes of
 	// Huffman tree;
@@ -141,11 +134,13 @@ void get_encoded_and_codes(const string &input, string& encoded_string, unordere
 		// of the two nodes' frequencies. Add the new node
 		// to the priority queue.
 		int sum = left->freq + right->freq;
+
 		pq.push(getNode('\0', sum, left, right));
 	}
 
 	// root stores pointer to root of Huffman Tree
 	root = pq.top();
+
 
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map. Also prints them
@@ -157,39 +152,53 @@ void get_encoded_and_codes(const string &input, string& encoded_string, unordere
 
 int main()
 {
-	string text = "AAAAAB";
+	string text = "AAAAA";
 
-	string encoded_string;
-	unordered_map<char, string> huffmanCode;
+	//string encoded_string;
+	unordered_map<char, string> huffman_codes;
 	Node* root = nullptr;
 
-	get_encoded_and_codes(text, encoded_string, huffmanCode, root);
+	get_codes(text, huffman_codes, root);
 
-	cout << "Huffman Codes are :\n" << '\n';
-	for (auto pair : huffmanCode) {
-		cout << pair.first << " " << pair.second << '\n';
-	}
+	cout << "Huffman codes:" << endl;
 
-	cout << "\nOriginal string was :\n" << text << '\n';
+	for (auto pair : huffman_codes)
+		cout << pair.first << " " << pair.second << endl;
+
+	cout << endl;
+
+	cout << "Original string was: " << text << endl;
 
 	// print encoded string
 	string str = "";
-	for (char ch : text) {
-		str += huffmanCode[ch];
-	}
 
+	for (char ch : text)
+		str += huffman_codes[ch];
 
-	cout << "\nEncoded string is :\n" << str << '\n';
+	cout << "Encoded string is:   " << str << endl;
 
 	// traverse the Huffman Tree again and this time
 	// decode the encoded string
-	int index = -1;
-	cout << "\nDecoded string is: \n";
-	while (index < (int)str.size() - 1) {
-		decode(root, index, str);
+
+	cout << "Decoded string is:   ";
+	string decoded_string;
+
+	if (huffman_codes.size() == 1)
+	{
+		const char c = huffman_codes.begin()->first;
+
+		for (size_t i = 0; i < str.size(); i++)
+			decoded_string += c;
+	}
+	else
+	{
+		int index = -1;
+
+		while (index < (int)str.size() - 1)
+			decode(root, index, str, decoded_string);
 	}
 
-	cout << endl;
+	cout << decoded_string << endl;
 
 	clean_up();
 
