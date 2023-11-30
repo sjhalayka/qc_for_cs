@@ -180,11 +180,9 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 
 int main()
 {
-	string text = "AAAAAZ";
+	string text = "AAABCBCBCBEGHGHGHH";
 
 	unordered_map<char, string> huffman_codes;
-	Node* root = nullptr;
-
 	get_codes(text, huffman_codes);
 
 	cout << "Huffman codes:" << endl;
@@ -209,6 +207,12 @@ int main()
 	decode(str, decoded_string, huffman_codes);
 
 	cout << "Decoded string is:   " << decoded_string << endl;
+
+	size_t num_encoded_bits = str.size();
+	size_t num_decoded_bits = decoded_string.size() * sizeof(char) * 8;
+	float compression = 1.0f - static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
+
+	cout << "Compression rate: " << compression * 100.0f << "%" << endl;
 
 	clean_up();
 
