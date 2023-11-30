@@ -84,7 +84,7 @@ void decode(Node* root, int& index, string str, string &decoded_string)
 }
 
 
-string Left(string& str, int pos)
+string str_left(string& str, int pos)
 {
 	int i;
 	string temp = "";
@@ -96,7 +96,7 @@ string Left(string& str, int pos)
 	return temp;
 }
 
-string Right(string& str, int pos)
+string str_right(string& str, int pos)
 {
 	int i;
 	string temp = "";
@@ -126,11 +126,8 @@ void decode2(string encoded_string, string& decoded_string, const unordered_map<
 				if (pair.second == token)
 				{
 					decoded_string += pair.first;
-					encoded_string = Right(encoded_string, token.length());// encoded_string.substr(end, encoded_string.length() - token.length());
+					encoded_string = str_right(encoded_string, token.length());
 					abort = true;
-
-					cout << encoded_string << endl;
-
 					break;
 				}
 			}
@@ -139,9 +136,7 @@ void decode2(string encoded_string, string& decoded_string, const unordered_map<
 				break;
 
 			end++;
-
 		}
-
 	}
 }
 
