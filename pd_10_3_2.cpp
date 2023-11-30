@@ -185,7 +185,7 @@ int main()
 	// Strings with low entropy produce higher compression rates
 	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAA"; // Compression 87.5%
 	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
-
+	//string text = "A";
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(text, huffman_codes);
@@ -216,12 +216,13 @@ int main()
 	cout << "Decoded string is:   " << decoded_string << endl;
 
 
+	// Note: this does not take into account the size of
+	// the Huffman codes map, but it's a close estimate
 	size_t num_encoded_bits = str.size();
 	size_t num_decoded_bits = decoded_string.size() * sizeof(char) * 8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
 	cout << "Compression rate: " << compression * 100.0f << "%" << endl;
-
 
 	clean_up();
 
