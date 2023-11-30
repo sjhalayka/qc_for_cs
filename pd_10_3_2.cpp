@@ -62,11 +62,11 @@ void encode(Node* root, string str,
 	encode(root->right, str + "1", huffmanCode);
 }
 
-string str_right(string& str, size_t pos)
+string str_right_trim(string& str, size_t pos)
 {
 	string temp = "";
 
-	for (size_t i = pos; i < strlen(str.c_str()); i++)
+	for (size_t i = pos; i < str.size(); i++)
 		temp += str[i];
 
 	return temp;
@@ -91,7 +91,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 				if (pair.second == token)
 				{
 					decoded_string += pair.first;
-					encoded_string = str_right(encoded_string, token.length());
+					encoded_string = str_right_trim(encoded_string, token.length());
 					abort = true;
 					break;
 				}
