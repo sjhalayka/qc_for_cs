@@ -1,136 +1,177 @@
 #include <iostream>
-#include <queue>
-#include <map>
 #include <vector>
+#include <string>
+#include <queue>
+#include <unordered_map>
 using namespace std;
 
 
-// Modified from ChatGPT code
-struct HuffmanNode
+// See:
+// https://gist.github.com/pwxcoo/72d7d3c5c3698371c21e486722f9b34b
+// https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
+// https://www.programiz.com/dsa/huffman-coding
+// https://iq.opengenus.org/huffman-encoding/
+
+
+struct Node
 {
-    char data;
-    int frequency;
-
-    HuffmanNode* left;
-    HuffmanNode* right;
-
-    HuffmanNode(char data, int frequency) : data(data), frequency(frequency), left(nullptr), right(nullptr)
-    {
-    
-    }
+	char ch;
+	int freq;
+	Node *left, *right;
 };
 
-vector<HuffmanNode*> pointers_to_clean_up;
+vector<Node*> nodes_to_clean_up;
 
-struct CompareNodes {
-    bool operator()(HuffmanNode* lhs, HuffmanNode* rhs)
-    {
-        return lhs->frequency > rhs->frequency;
-    }
+// Function to allocate a new tree node
+Node* getNode(char ch, int freq, Node* left, Node* right)
+{
+	Node* node = new Node();
+	nodes_to_clean_up.push_back(node);
+
+	node->ch = ch;
+	node->freq = freq;
+	node->left = left;
+	node->right = right;
+
+	return node;
+}
+
+// Comparison object to be used to order the heap
+struct comp
+{
+	bool operator()(Node* l, Node* r)
+	{
+		// highest priority item has lowest frequency
+		return l->freq > r->freq;
+	}
 };
 
-HuffmanNode* buildHuffmanTree(map<char, int>& frequencies)
+// traverse the Huffman Tree and store Huffman Codes
+// in a map.
+void encode(Node* root, string str,
+	unordered_map<char, string>& huffmanCode)
 {
-    priority_queue<HuffmanNode*, vector<HuffmanNode*>, CompareNodes> pq;
+	if (root == nullptr)
+		return;
 
-    for (const auto& entry : frequencies)
-    {
-        HuffmanNode* t = new HuffmanNode(entry.first, entry.second);
-        pointers_to_clean_up.push_back(t);
-        pq.push(t);
-    }
+	// found a leaf node
+	if (!root->left && !root->right)
+		huffmanCode[root->ch] = str;
 
-    while (pq.size() > 1)
-    {
-        HuffmanNode* left = pq.top();
-        pq.pop();
-
-        HuffmanNode* right = pq.top();
-        pq.pop();
-
-        HuffmanNode* newNode = new HuffmanNode('\0', left->frequency + right->frequency);
-        newNode->left = left;
-        newNode->right = right;
-        pointers_to_clean_up.push_back(newNode);
-        pq.push(newNode);
-    }
-
-    return pq.top();
+	encode(root->left, str + "0", huffmanCode);
+	encode(root->right, str + "1", huffmanCode);
 }
 
-void generateCodes(HuffmanNode* root, string code, map<char, string>& codes)
+// traverse the Huffman Tree and decode the encoded string
+void decode(Node* root, int& index, string str)
 {
-    if (root == nullptr) 
-        return;
+	if (root == nullptr)
+		return;
 
-    if (root->data != '\0')
-        codes[root->data] = code;
+	// found a leaf node
+	if (!root->left && !root->right)
+	{
+		cout << root->ch;
+		return;
+	}
 
-    generateCodes(root->left, code + "0", codes);
-    generateCodes(root->right, code + "1", codes);
+	index++;
+
+	if (str[index] == '0')
+		decode(root->left, index, str);
+	else
+		decode(root->right, index, str);
 }
 
-string encode(string message, map<char, string>& codes)
+// Builds Huffman Tree and decode given input text
+void buildHuffmanTree(string text)
 {
-    string encodedMessage = "";
+	// count frequency of appearance of each character
+	// and store it in a map
+	unordered_map<char, int> freq;
 
-    for (char c : message)
-        encodedMessage += codes[c];
+	for (char ch : text)
+		freq[ch]++;
 
-    return encodedMessage;
+	// Create a priority queue to store live nodes of
+	// Huffman tree;
+	priority_queue<Node*, vector<Node*>, comp> pq;
+
+	// Create a leaf node for each character and add it
+	// to the priority queue.
+	for (auto pair : freq)
+		pq.push(getNode(pair.first, pair.second, nullptr, nullptr));
+
+	// do till there is more than one node in the queue
+	while (pq.size() != 1)
+	{
+		// Remove the two nodes of highest priority
+		// (lowest frequency) from the queue
+		Node* left = pq.top(); 
+		pq.pop();
+		
+		Node* right = pq.top();	
+		pq.pop();
+
+		// Create a new internal node with these two nodes
+		// as children and with frequency equal to the sum
+		// of the two nodes' frequencies. Add the new node
+		// to the priority queue.
+		int sum = left->freq + right->freq;
+		pq.push(getNode('\0', sum, left, right));
+	}
+
+	// root stores pointer to root of Huffman Tree
+	Node* root = pq.top();
+
+	// traverse the Huffman Tree and store Huffman Codes
+	// in a map. Also prints them
+	unordered_map<char, string> huffmanCode;
+	encode(root, "", huffmanCode);
+
+	cout << "Huffman Codes are :\n" << '\n';
+	for (auto pair : huffmanCode) {
+		cout << pair.first << " " << pair.second << '\n';
+	}
+
+	cout << "\nOriginal string was :\n" << text << '\n';
+
+	// print encoded string
+	string str = "";
+	for (char ch : text) {
+		str += huffmanCode[ch];
+	}
+
+	cout << "\nEncoded string is :\n" << str << '\n';
+
+	// traverse the Huffman Tree again and this time
+	// decode the encoded string
+	int index = -1;
+	cout << "\nDecoded string is: \n";
+	while (index < (int)str.size() - 2) {
+		decode(root, index, str);
+	}
+
+	cout << endl;
 }
 
-string decode(HuffmanNode* root, string encodedMessage)
-{
-    string decodedMessage = "";
-    HuffmanNode* current = root;
-
-    for (char bit : encodedMessage) 
-    {
-        if (bit == '0')
-            current = current->left;
-        else
-            current = current->right;
-
-        if (current->left == nullptr && current->right == nullptr)
-        {
-            decodedMessage += current->data;
-            current = root;
-        }
-    }
-
-    return decodedMessage;
-}
 
 void clean_up(void)
 {
-    for (size_t i = 0; i < pointers_to_clean_up.size(); i++)
-        delete pointers_to_clean_up[i];
+	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
+
+	for (size_t i = 0; i < nodes_to_clean_up.size(); i++)
+		delete nodes_to_clean_up[i];
 }
 
 
-
-int main(void) 
+int main()
 {
-    string message = "this is an example for huffman encoding";
+	string text = "Huffman coding is a data compression algorithm.";
 
-    map<char, int> frequencies;
+	buildHuffmanTree(text);
 
-    for (char c : message)
-        frequencies[c]++;
+	clean_up();
 
-    HuffmanNode* root = buildHuffmanTree(frequencies);
-
-    map<char, string> codes;
-    generateCodes(root, "", codes);
-
-    string encodedMessage = encode(message, codes);
-    cout << "Encoded Message: " << encodedMessage << endl;
-
-    string decodedMessage = decode(root, encodedMessage);
-    cout << "Decoded Message: " << decodedMessage << endl;
-
-    clean_up();
-
-    return 0;
-}   
+	return 0;
+}
