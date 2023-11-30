@@ -84,32 +84,71 @@ void decode(Node* root, int& index, string str, string &decoded_string)
 }
 
 
+string Left(string& str, int pos)
+{
+	int i;
+	string temp = "";
+	for (i = 0; i < pos; i++)
+	{
+		temp += str[i];
+	}
+
+	return temp;
+}
+
+string Right(string& str, int pos)
+{
+	int i;
+	string temp = "";
+	for (i = pos; i < strlen(str.c_str()); i++)
+	{
+		temp += str[i];
+	}
+	return temp;
+}
+
 void decode2(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
 
-	size_t end = 1;
-
 	while (encoded_string != "")
 	{
-		while (end < encoded_string.size() + 1)
-		{
-			string token = encoded_string.substr(0, end);
-			reverse(token.begin(), token.end());
+		size_t end = 0;
 
+		while (end < encoded_string.size())
+		{
+			bool abort = false;
+
+			string token = encoded_string.substr(0, end + 1);
+			
 			for (auto pair : huffman_codes)
 			{
 				if (pair.second == token)
 				{
 					decoded_string += pair.first;
-					encoded_string = encoded_string.substr(end, encoded_string.size() - end);
-					end = 1;
+					encoded_string = Right(encoded_string, token.length());// encoded_string.substr(end, encoded_string.length() - token.length());
+					abort = true;
+
+					cout << encoded_string << endl;
+
 					break;
 				}
 			}
+
+			if (abort)
+				break;
+
+			end++;
+
 		}
+
 	}
 }
+
+
+
+
+
 
 
 void clean_up(void)
@@ -182,7 +221,7 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 
 int main()
 {
-	string text = "AAAAAB";
+	string text = "BDFAAAAABC";
 
 	//string encoded_string;
 	unordered_map<char, string> huffman_codes;
