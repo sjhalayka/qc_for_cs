@@ -182,7 +182,10 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 
 int main()
 {
-	string text = "AAABCBCBCBEGHGHGHH";
+	// Strings with low entropy produce higher compression rates
+	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAA"; // Compression 87.5%
+	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(text, huffman_codes);
@@ -194,6 +197,7 @@ int main()
 
 	cout << endl;
 
+
 	cout << "Original string was: " << text << endl;
 
 	// print encoded string
@@ -204,17 +208,20 @@ int main()
 
 	cout << "Encoded string is:   " << str << endl;
 
+
 	string decoded_string;
 
 	decode(str, decoded_string, huffman_codes);
 
 	cout << "Decoded string is:   " << decoded_string << endl;
 
+
 	size_t num_encoded_bits = str.size();
 	size_t num_decoded_bits = decoded_string.size() * sizeof(char) * 8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
 	cout << "Compression rate: " << compression * 100.0f << "%" << endl;
+
 
 	clean_up();
 
