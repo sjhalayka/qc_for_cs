@@ -71,6 +71,16 @@ string str_trim(string& str, size_t pos)
 
 void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
+	if (huffman_codes.size() == 1)
+	{
+		const char c = huffman_codes.begin()->first; // should be 0
+
+		for (size_t i = 0; i < encoded_string.size(); i++)
+			decoded_string += c;
+
+		return;
+	}
+
 	decoded_string = "";
 
 	while (encoded_string != "")
@@ -170,7 +180,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 
 int main()
 {
-	string text = "CAAABAAC";
+	string text = "AAAAAZ";
 
 	unordered_map<char, string> huffman_codes;
 	Node* root = nullptr;
@@ -196,17 +206,7 @@ int main()
 
 	string decoded_string;
 
-	if (huffman_codes.size() == 1)
-	{
-		const char c = huffman_codes.begin()->first; // should be 0
-
-		for (size_t i = 0; i < str.size(); i++)
-			decoded_string += c;
-	}
-	else
-	{
-		decode(str, decoded_string, huffman_codes);
-	}
+	decode(str, decoded_string, huffman_codes);
 
 	cout << "Decoded string is:   " << decoded_string << endl;
 
