@@ -7,11 +7,9 @@
 using namespace std;
 
 
-// See:
+// Modified from:
 // https://gist.github.com/pwxcoo/72d7d3c5c3698371c21e486722f9b34b
-// https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
-// https://www.programiz.com/dsa/huffman-coding
-// https://iq.opengenus.org/huffman-encoding/
+
 
 struct Node
 {
@@ -48,8 +46,7 @@ struct comp
 
 // traverse the Huffman Tree and store Huffman Codes
 // in a map.
-void encode(Node* root, string str,
-	unordered_map<char, string>& huffmanCode)
+void encode(Node* root, const string str, unordered_map<char, string>& huffmanCode)
 {
 	if (root == nullptr)
 		return;
@@ -105,12 +102,6 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 	}
 }
 
-
-
-
-
-
-
 void clean_up(void)
 {
 	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
@@ -119,9 +110,9 @@ void clean_up(void)
 		delete nodes_to_clean_up[i];
 }
 
-void get_codes(const string& input, unordered_map<char, string>& um, Node*& root)
+void get_codes(const string& input, unordered_map<char, string>& um)
 {
-	root = nullptr;
+	Node *root = nullptr;
 
 	// count frequency of appearance of each character
 	// and store it in a map
@@ -170,7 +161,6 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 	// root stores pointer to root of Huffman Tree
 	root = pq.top();
 
-
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map. Also prints them
 
@@ -178,16 +168,14 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 }
 
 
-
 int main()
 {
 	string text = "BAAAAAC";
 
-	//string encoded_string;
 	unordered_map<char, string> huffman_codes;
 	Node* root = nullptr;
 
-	get_codes(text, huffman_codes, root);
+	get_codes(text, huffman_codes);
 
 	cout << "Huffman codes:" << endl;
 
@@ -206,14 +194,11 @@ int main()
 
 	cout << "Encoded string is:   " << str << endl;
 
-	// traverse the Huffman Tree again and this time
-	// decode the encoded string
-
 	string decoded_string;
 
 	if (huffman_codes.size() == 1)
 	{
-		const char c = huffman_codes.begin()->first;
+		const char c = huffman_codes.begin()->first; // should be 0
 
 		for (size_t i = 0; i < str.size(); i++)
 			decoded_string += c;
