@@ -17,7 +17,7 @@ struct Node
 {
 	char ch;
 	int freq;
-	Node* left, * right;
+	Node *left, *right;
 };
 
 vector<Node*> nodes_to_clean_up;
@@ -83,16 +83,36 @@ void decode(Node* root, int& index, string str)
 		decode(root->right, index, str);
 }
 
-// Builds Huffman Tree and decode given input text
-void buildHuffmanTree(string text)
+void clean_up(void)
 {
+	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
+
+	for (size_t i = 0; i < nodes_to_clean_up.size(); i++)
+		delete nodes_to_clean_up[i];
+}
+
+
+void get_encoded_and_codes(const string &input, string& encoded_string, unordered_map<char, string>& um, Node* &root)
+{
+
 	// count frequency of appearance of each character
 	// and store it in a map
 	unordered_map<char, int> freq;
 
-	for (char ch : text)
+	for (char ch : input)
 		freq[ch]++;
 
+	if (freq.size() == 1)
+	{
+		//string encode;
+
+		//const size_t num_zeroes = freq.begin()->second;
+
+		//for (size_t i = 0; i < num_zeroes; i++)
+		//	encode += '0';
+
+		//return encode;
+	}
 
 
 
@@ -125,12 +145,25 @@ void buildHuffmanTree(string text)
 	}
 
 	// root stores pointer to root of Huffman Tree
-	Node* root = pq.top();
+	root = pq.top();
 
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map. Also prints them
+
+	encode(root, "", um);
+}
+
+
+
+int main()
+{
+	string text = "AAAAAB";
+
+	string encoded_string;
 	unordered_map<char, string> huffmanCode;
-	encode(root, "", huffmanCode);
+	Node* root = nullptr;
+
+	get_encoded_and_codes(text, encoded_string, huffmanCode, root);
 
 	cout << "Huffman Codes are :\n" << '\n';
 	for (auto pair : huffmanCode) {
@@ -145,34 +178,18 @@ void buildHuffmanTree(string text)
 		str += huffmanCode[ch];
 	}
 
+
 	cout << "\nEncoded string is :\n" << str << '\n';
 
 	// traverse the Huffman Tree again and this time
 	// decode the encoded string
 	int index = -1;
 	cout << "\nDecoded string is: \n";
-	while (index < (int)str.size() - 2) {
+	while (index < (int)str.size() - 1) {
 		decode(root, index, str);
 	}
 
 	cout << endl;
-}
-
-
-void clean_up(void)
-{
-	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
-
-	for (size_t i = 0; i < nodes_to_clean_up.size(); i++)
-		delete nodes_to_clean_up[i];
-}
-
-
-int main()
-{
-	string text = "Huffman coding is a data compression algorithm.";
-
-	buildHuffmanTree(text);
 
 	clean_up();
 
