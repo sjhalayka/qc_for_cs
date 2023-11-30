@@ -3,6 +3,7 @@
 #include <string>
 #include <queue>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 
@@ -82,6 +83,35 @@ void decode(Node* root, int& index, string str, string &decoded_string)
 		decode(root->right, index, str, decoded_string);
 }
 
+
+void decode2(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
+{
+	decoded_string = "";
+
+	size_t end = 1;
+
+	while (encoded_string != "")
+	{
+		while (end < encoded_string.size() + 1)
+		{
+			string token = encoded_string.substr(0, end);
+			reverse(token.begin(), token.end());
+
+			for (auto pair : huffman_codes)
+			{
+				if (pair.second == token)
+				{
+					decoded_string += pair.first;
+					encoded_string = encoded_string.substr(end, encoded_string.size() - end);
+					end = 1;
+					break;
+				}
+			}
+		}
+	}
+}
+
+
 void clean_up(void)
 {
 	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
@@ -152,7 +182,7 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 
 int main()
 {
-	string text = "AAAAA";
+	string text = "AAAAAB";
 
 	//string encoded_string;
 	unordered_map<char, string> huffman_codes;
@@ -192,10 +222,14 @@ int main()
 	}
 	else
 	{
+		decode2(str, decoded_string, huffman_codes);
+		
+		/*
 		int index = -1;
 
 		while (index < (int)str.size() - 1)
-			decode(root, index, str, decoded_string);
+			decode(root, index, str, decoded_string);	
+		*/
 	}
 
 	cout << decoded_string << endl;
