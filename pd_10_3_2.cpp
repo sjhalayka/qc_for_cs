@@ -99,8 +99,8 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 			if (abort)
 				break;
-
-			end++;
+			else
+				end++;
 		}
 	}
 }
@@ -181,7 +181,7 @@ void get_codes(const string& input, unordered_map<char, string>& um, Node*& root
 
 int main()
 {
-	string text = "BDFAAAAABCG";
+	string text = "BAAAAAC";
 
 	//string encoded_string;
 	unordered_map<char, string> huffman_codes;
