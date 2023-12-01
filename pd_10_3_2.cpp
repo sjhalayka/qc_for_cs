@@ -186,8 +186,6 @@ int main()
 	//for (size_t i = 0; i < 10000; i++)
 	//	text += rand() % 256;
 
-	Node* root = nullptr;
-
 	unordered_map<char, string> huffman_codes;
 	get_codes(text, huffman_codes);
 
