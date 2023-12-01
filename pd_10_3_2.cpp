@@ -94,9 +94,9 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		return;
 	}
 
+	const size_t encoded_len = encoded_string.length();
 	size_t begin_index = 0;
 	size_t len = 1;
-	const size_t encoded_len = encoded_string.length();
 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
