@@ -199,7 +199,7 @@ int main()
 
 	cout << "Original string was: " << text << endl;
 
-	// print encoded string
+
 	string str = "";
 
 	for (char ch : text)
