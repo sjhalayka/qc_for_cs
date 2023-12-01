@@ -69,6 +69,17 @@ void clean_up(void)
 		delete nodes_to_clean_up[i];
 }
 
+bool is_valid_window(const size_t string_length, const size_t begin_window_index, const size_t window_length)
+{
+	if (begin_window_index >= string_length)
+		return false;
+
+	if ((begin_window_index + window_length - 1) >= string_length)
+		return false;
+
+	return true;
+}
+
 void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
@@ -83,36 +94,34 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 		return;
 	}
 
-	while (encoded_string != "")
+	size_t begin_index = 0;
+	size_t len = 1;
+
+	while (is_valid_window(encoded_string.length(), begin_index, len))
 	{
-		if (encoded_string.size() % 1000 == 0)
-			cout << encoded_string.size() << endl;
+		const string token = encoded_string.substr(begin_index, len);
 
-		size_t end = 0;
+		bool found_token = false;
 
-		while (end < encoded_string.size())
+		for (auto pair : huffman_codes)
 		{
-			const string token = encoded_string.substr(0, end + 1);
-
-			bool found_token = false;
-
-			for (auto pair : huffman_codes)
+			if (pair.second == token)
 			{
-				if (pair.second == token)
-				{
-					decoded_string += pair.first;
+				decoded_string += pair.first;
 
-					// Chop off token and start over
-					encoded_string = encoded_string.substr(token.length(), encoded_string.length() - token.length());
-					found_token = true;
-					break;
-				}
-			}
-
-			if (found_token)
+				found_token = true;
 				break;
-			else
-				end++;
+			}
+		}
+
+		if (found_token)
+		{
+			begin_index += token.size();
+			len = 1;
+		}
+		else
+		{
+			len++;
 		}
 	}
 }
@@ -178,7 +187,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 int main()
 {
 	// Strings with lower entropy produce higher compression rates
-	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
+	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA"; // Compression 87.5%
 	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
 
 	//string plaintext;
@@ -214,14 +223,13 @@ int main()
 	cout << "Decoded string is:   " << decoded_string << endl;
 
 
-	// Taking the number of map bits into account shows that the
-	// map contents size becomes negligible for very large text size
+	// The number of map bits becomes negligible for large encoded string length
 	size_t num_map_bits = 0;
 
 	for (auto pair : huffman_codes)
 		num_map_bits += sizeof(char)*8 + pair.second.size(); // 8 bits per key + n bits per element.
 
-	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
+	size_t num_encoded_bits = encoded_string.size();// + num_map_bits;
 	size_t num_decoded_bits = decoded_string.size()*sizeof(char)*8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits)/static_cast<float>(num_decoded_bits);
 
