@@ -81,10 +81,10 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 		while (end < encoded_string.size())
 		{
+			const string token = encoded_string.substr(0, end + 1);
+
 			bool found_token = false;
 
-			const string token = encoded_string.substr(0, end + 1);
-			
 			for (auto pair : huffman_codes)
 			{
 				if (pair.second == token)
@@ -175,7 +175,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 int main()
 {
 	// Strings with low entropy produce higher compression rates
-	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAA"; // Compression 87.5%
+	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
 	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
 
 	unordered_map<char, string> huffman_codes;
@@ -206,9 +206,10 @@ int main()
 
 	cout << "Decoded string is:   " << decoded_string << endl;
 
-
-	// Note: this does not take into account the size of the
-	// Huffman codes map<char, string>, but it's a close estimate
+	// Note: This code does not take into account the size of
+	// the Huffman codes map contents because the larger the 
+	// encoded bit count, the more the size of the Huffman codes
+	// map contents becomes negligible.
 	size_t num_encoded_bits = str.size();
 	size_t num_decoded_bits = decoded_string.size() * sizeof(char) * 8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
