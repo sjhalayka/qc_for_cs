@@ -67,7 +67,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 	if (huffman_codes.size() == 1)
 	{
-		const char c = huffman_codes.begin()->first; // should be 0
+		const char c = huffman_codes.begin()->first; // should be '0'
 
 		for (size_t i = 0; i < encoded_string.size(); i++)
 			decoded_string += c;
@@ -91,7 +91,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 				{
 					decoded_string += pair.first;
 
-					// Chop off token
+					// Chop off token and start over
 					encoded_string = encoded_string.substr(token.length(), encoded_string.length() - token.length());
 					
 					found_token = true;
