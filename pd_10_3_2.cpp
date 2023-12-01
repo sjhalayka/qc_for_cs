@@ -96,8 +96,9 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 	size_t begin_index = 0;
 	size_t len = 1;
+	const size_t encoded_len = encoded_string.length();
 
-	while (is_valid_window(encoded_string.length(), begin_index, len))
+	while (is_valid_window(encoded_len, begin_index, len))
 	{
 		const string token = encoded_string.substr(begin_index, len);
 
