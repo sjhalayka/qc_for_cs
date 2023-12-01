@@ -81,7 +81,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 		while (end < encoded_string.size())
 		{
-			bool abort = false;
+			bool found_token = false;
 
 			string token = encoded_string.substr(0, end + 1);
 			
@@ -91,12 +91,12 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 				{
 					decoded_string += pair.first;
 					encoded_string = encoded_string.substr(token.length(), encoded_string.length() - token.length());
-					abort = true;
+					found_token = true;
 					break;
 				}
 			}
 
-			if (abort)
+			if (found_token)
 				break;
 			else
 				end++;
