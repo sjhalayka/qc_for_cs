@@ -63,6 +63,8 @@ void encode(Node* root, const string str, unordered_map<char, string>& huffmanCo
 
 void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
+	decoded_string = "";
+
 	if (huffman_codes.size() == 1)
 	{
 		const char c = huffman_codes.begin()->first; // should be 0
@@ -72,8 +74,6 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 		return;
 	}
-
-	decoded_string = "";
 
 	while (encoded_string != "")
 	{
