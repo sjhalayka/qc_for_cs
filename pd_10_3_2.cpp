@@ -61,6 +61,7 @@ void encode(Node* root, const string str, unordered_map<char, string>& huffmanCo
 	encode(root->right, str + "1", huffmanCode);
 }
 
+// Not the fastest, but it's pretty clear in meaning
 void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
@@ -77,6 +78,9 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 
 	while (encoded_string != "")
 	{
+		if(encoded_string.size() % 1000 == 0)
+			cout << encoded_string.size() << endl;
+
 		size_t end = 0;
 
 		while (end < encoded_string.size())
@@ -176,7 +180,12 @@ int main()
 {
 	// Strings with low entropy produce higher compression rates
 	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
-	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+	//string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+
+	string text;
+
+	for (size_t i = 0; i < 1000000; i++)
+		text += rand() % 256;
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(text, huffman_codes);
@@ -210,7 +219,18 @@ int main()
 	// the Huffman codes map contents because the larger the 
 	// encoded bit count, the more the size of the Huffman codes
 	// map contents becomes negligible.
-	size_t num_encoded_bits = str.size();
+
+	size_t num_map_bits = 0;
+
+	for (auto pair : huffman_codes)
+	{
+		num_map_bits += pair.first * sizeof(char) * 8;
+		num_map_bits += pair.second.size() * sizeof(char) * 8;
+	}
+	//	cout << pair.first << " " << pair.second << endl;
+
+
+	size_t num_encoded_bits = str.size() + num_map_bits;
 	size_t num_decoded_bits = decoded_string.size() * sizeof(char) * 8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
