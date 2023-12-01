@@ -90,6 +90,8 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 				if (pair.second == token)
 				{
 					decoded_string += pair.first;
+
+					// Chop off token
 					encoded_string = encoded_string.substr(token.length(), encoded_string.length() - token.length());
 					found_token = true;
 					break;
