@@ -23,7 +23,7 @@ struct Node
 vector<Node*> nodes_to_clean_up;
 
 // Function to allocate a new tree node
-Node* getNode(char ch, int freq, Node* left, Node* right)
+Node* getNode(const char ch, const int freq, Node* left, Node* right)
 {
 	Node* node = new Node();
 	nodes_to_clean_up.push_back(node);
@@ -48,17 +48,17 @@ struct comp
 
 // traverse the Huffman Tree and store Huffman Codes
 // in a map.
-void encode(Node* root, const string str, unordered_map<char, string>& huffmanCode)
+void encode(Node* root, const string str, unordered_map<char, string>& huffman_codes)
 {
 	if (root == nullptr)
 		return;
 
 	// found a leaf node
 	if (!root->left && !root->right)
-		huffmanCode[root->ch] = str;
+		huffman_codes[root->ch] = str;
 
-	encode(root->left, str + "0", huffmanCode);
-	encode(root->right, str + "1", huffmanCode);
+	encode(root->left, str + "0", huffman_codes);
+	encode(root->right, str + "1", huffman_codes);
 }
 
 void clean_up(void)
@@ -129,6 +129,8 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 
 void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
 {
+	huffman_codes.clear();
+
 	Node *root = nullptr;
 
 	// count frequency of appearance of each character
