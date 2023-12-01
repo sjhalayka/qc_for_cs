@@ -61,7 +61,7 @@ void encode(Node* root, const string str, unordered_map<char, string>& huffmanCo
 	encode(root->right, str + "1", huffmanCode);
 }
 
-void decode_slow(Node* root, int& index, string str, string& decoded_string)
+void decode_xiance(Node* root, int& index, string str, string& decoded_string)
 {
 	if (root == nullptr)
 		return;
@@ -76,13 +76,13 @@ void decode_slow(Node* root, int& index, string str, string& decoded_string)
 	index++;
 
 	if (str[index] == '0')
-		decode_slow(root->left, index, str, decoded_string);
+		decode_xiance(root->left, index, str, decoded_string);
 	else
-		decode_slow(root->right, index, str, decoded_string);
+		decode_xiance(root->right, index, str, decoded_string);
 
 }
 
-void get_codes_slow(const string& input, unordered_map<char, string>& um, Node*& root)
+void get_codes_xiance(const string& input, unordered_map<char, string>& um, Node*& root)
 {
 	root = nullptr;
 
@@ -258,17 +258,17 @@ int main()
 {
 	// Strings with lower entropy produce higher compression rates
 	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
-	//string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
 
-	string text;
+	//string text;
 
-	for (size_t i = 0; i < 1000000; i++)
-		text += rand() % 256;
+	//for (size_t i = 0; i < 10000; i++)
+	//	text += rand() % 256;
 
 	Node* root = nullptr;
 
 	unordered_map<char, string> huffman_codes;
-	//get_codes_fast(text, huffman_codes, root);
+	//get_codes_xiance(text, huffman_codes, root);
 	get_codes(text, huffman_codes);
 
 	cout << "Huffman codes:" << endl;
@@ -295,13 +295,10 @@ int main()
 	//int index = -1;
 
 	//while (index < (int)str.size() - 2) {
-	//	decode_fast(root, index, str, decoded_string);
+	//	decode_xiance(root, index, str, decoded_string);
 	//}
 
 	decode(str, decoded_string, huffman_codes);
-
-
-
 
 	cout << "Decoded string is:   " << decoded_string << endl;
 
