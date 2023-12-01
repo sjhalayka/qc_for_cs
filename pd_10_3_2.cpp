@@ -178,16 +178,16 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 int main()
 {
 	// Strings with lower entropy produce higher compression rates
-	//string text = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
-	string text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
+	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
 
-	//string text;
+	//string plaintext;
 
 	//for (size_t i = 0; i < 10000; i++)
-	//	text += rand() % 256;
+	//	plaintext += rand() % 256;
 
 	unordered_map<char, string> huffman_codes;
-	get_codes(text, huffman_codes);
+	get_codes(plaintext, huffman_codes);
 
 	cout << "Huffman codes:" << endl;
 
@@ -197,21 +197,22 @@ int main()
 	cout << endl;
 
 
-	cout << "Original string was: " << text << endl;
+	cout << "Original string was: " << plaintext << endl;
 
 
-	string str = "";
+	string encoded_string = "";
 
-	for (char ch : text)
-		str += huffman_codes[ch];
+	for (char ch : plaintext)
+		encoded_string += huffman_codes[ch];
 
-	cout << "Encoded string is:   " << str << endl;
+	cout << "Encoded string is:   " << encoded_string << endl;
 
 
 	string decoded_string;
-	decode(str, decoded_string, huffman_codes);
+	decode(encoded_string, decoded_string, huffman_codes);
 
 	cout << "Decoded string is:   " << decoded_string << endl;
+
 
 	// Taking the number of map bits into account shows that the
 	// map contents size becomes negligible for very large text size
@@ -220,7 +221,7 @@ int main()
 	for (auto pair : huffman_codes)
 		num_map_bits += pair.first*sizeof(char)*8 + pair.second.size();
 
-	size_t num_encoded_bits = str.size();// + num_map_bits;
+	size_t num_encoded_bits = encoded_string.size();// + num_map_bits;
 	size_t num_decoded_bits = decoded_string.size()*sizeof(char)*8;
 	float compression = 1.0f - static_cast<float>(num_encoded_bits)/static_cast<float>(num_decoded_bits);
 
