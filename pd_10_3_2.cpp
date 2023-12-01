@@ -80,7 +80,7 @@ bool is_valid_window(const size_t string_length, const size_t begin_window_index
 	return true;
 }
 
-void decode(string encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
+void decode(const string &encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
 
