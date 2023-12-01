@@ -84,6 +84,9 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 {
 	decoded_string = "";
 
+	if(huffman_codes.size() == 0)
+		return;
+
 	if (huffman_codes.size() == 1)
 	{
 		const char c = huffman_codes.begin()->first; // should be '0'
@@ -130,6 +133,9 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
 {
 	huffman_codes.clear();
+
+	if (input.size() == 0)
+		return;
 
 	Node *root = nullptr;
 
