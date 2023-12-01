@@ -61,85 +61,6 @@ void encode(Node* root, const string str, unordered_map<char, string>& huffmanCo
 	encode(root->right, str + "1", huffmanCode);
 }
 
-void decode_xiance(Node* root, int& index, string str, string& decoded_string)
-{
-	if (root == nullptr)
-		return;
-
-	// found a leaf node
-	if (!root->left && !root->right)
-	{
-		decoded_string += root->ch;
-		return;
-	}
-
-	index++;
-
-	if (str[index] == '0')
-		decode_xiance(root->left, index, str, decoded_string);
-	else
-		decode_xiance(root->right, index, str, decoded_string);
-
-}
-
-void get_codes_xiance(const string& input, unordered_map<char, string>& um, Node*& root)
-{
-	root = nullptr;
-
-	// count frequency of appearance of each character
-	// and store it in a map
-	unordered_map<char, int> freq;
-
-	for (char ch : input)
-		freq[ch]++;
-
-	if (freq.size() == 1)
-	{
-		root = getNode(freq.begin()->first, freq.begin()->second, nullptr, nullptr);
-		um[root->ch] = "0";
-
-		return;
-	}
-
-	// Create a priority queue to store live nodes of
-	// Huffman tree;
-	priority_queue<Node*, vector<Node*>, comp> pq;
-
-	// Create a leaf node for each character and add it
-	// to the priority queue.
-	for (auto pair : freq)
-		pq.push(getNode(pair.first, pair.second, nullptr, nullptr));
-
-	// do till there is more than one node in the queue
-	while (pq.size() != 1)
-	{
-		// Remove the two nodes of highest priority
-		// (lowest frequency) from the queue
-		Node* left = pq.top();
-		pq.pop();
-
-		Node* right = pq.top();
-		pq.pop();
-
-		// Create a new internal node with these two nodes
-		// as children and with frequency equal to the sum
-		// of the two nodes' frequencies. Add the new node
-		// to the priority queue.
-		int sum = left->freq + right->freq;
-
-		pq.push(getNode('\0', sum, left, right));
-	}
-
-	// root stores pointer to root of Huffman Tree
-	root = pq.top();
-
-
-	// traverse the Huffman Tree and store Huffman Codes
-	// in a map. Also prints them
-
-	encode(root, "", um);
-}
-
 void clean_up(void)
 {
 	cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
@@ -268,7 +189,6 @@ int main()
 	Node* root = nullptr;
 
 	unordered_map<char, string> huffman_codes;
-	//get_codes_xiance(text, huffman_codes, root);
 	get_codes(text, huffman_codes);
 
 	cout << "Huffman codes:" << endl;
@@ -291,13 +211,6 @@ int main()
 
 
 	string decoded_string;
-
-	//int index = -1;
-
-	//while (index < (int)str.size() - 2) {
-	//	decode_xiance(root, index, str, decoded_string);
-	//}
-
 	decode(str, decoded_string, huffman_codes);
 
 	cout << "Decoded string is:   " << decoded_string << endl;
