@@ -179,12 +179,12 @@ int main()
 {
 	// Strings with lower entropy produce higher compression rates
 	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAABC"; // Compression 87.5%
-	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
+	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Compression 40.4%
 
-	string plaintext;
+	//string plaintext;
 
-	for (size_t i = 0; i < 1000000; i++)
-		plaintext += rand() % 256;
+	//for (size_t i = 0; i < 1000000; i++)
+	//	plaintext += rand() % 256;
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(plaintext, huffman_codes);
