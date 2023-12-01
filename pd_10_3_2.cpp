@@ -196,7 +196,7 @@ int main()
 	//string plaintext;
 
 	//for (size_t i = 0; i < 1000000; i++)
-	//	plaintext += rand() % 256;
+	//	plaintext += rand() % 16;
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(plaintext, huffman_codes);
@@ -230,13 +230,14 @@ int main()
 	size_t num_map_bits = 0;
 
 	for (auto pair : huffman_codes)
-		num_map_bits += sizeof(char)*8 + pair.second.size(); // 8 bits per key + n bits per element.
+		num_map_bits += sizeof(char)*8 + pair.second.size(); // 8 bits per key + n bits per element
 
-	size_t num_encoded_bits = encoded_string.size();// + num_map_bits;
+	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
 	size_t num_decoded_bits = decoded_string.size()*sizeof(char)*8;
-	float compression = 1.0f - static_cast<float>(num_encoded_bits)/static_cast<float>(num_decoded_bits);
+	float scale = static_cast<float>(num_encoded_bits)/static_cast<float>(num_decoded_bits);
 
-	cout << "Compression rate: " << compression * 100.0f << "%" << endl;
+	// Scale is less than 1.0 if compression occurs
+	cout << "Scale: " << scale << endl;
 
 	clean_up();
 
