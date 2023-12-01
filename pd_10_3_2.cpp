@@ -126,7 +126,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 	}
 }
 
-void get_codes(const string& input, unordered_map<char, string>& um)
+void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
 {
 	Node *root = nullptr;
 
@@ -140,7 +140,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 	if (freq.size() == 1)
 	{
 		root = getNode(freq.begin()->first, freq.begin()->second, nullptr, nullptr);
-		um[root->ch] = "0";
+		huffman_codes[root->ch] = "0";
 
 		return;
 	}
@@ -180,7 +180,7 @@ void get_codes(const string& input, unordered_map<char, string>& um)
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map. Also prints them
 
-	encode(root, "", um);
+	encode(root, "", huffman_codes);
 }
 
 
@@ -211,8 +211,8 @@ int main()
 
 	string encoded_string = "";
 
-	for (char ch : plaintext)
-		encoded_string += huffman_codes[ch];
+	for (char c : plaintext)
+		encoded_string += huffman_codes[c];
 
 	cout << "Encoded string is:   " << encoded_string << endl;
 
