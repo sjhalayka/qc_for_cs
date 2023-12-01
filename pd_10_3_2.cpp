@@ -83,7 +83,7 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 		{
 			bool found_token = false;
 
-			string token = encoded_string.substr(0, end + 1);
+			const string token = encoded_string.substr(0, end + 1);
 			
 			for (auto pair : huffman_codes)
 			{
