@@ -225,7 +225,7 @@ int main()
 	for (auto pair : huffman_codes)
 	{
 		num_map_bits += pair.first * sizeof(char) * 8;
-		num_map_bits += pair.second.size() * sizeof(char) * 8;
+		num_map_bits += pair.second.size();
 	}
 	//	cout << pair.first << " " << pair.second << endl;
 
