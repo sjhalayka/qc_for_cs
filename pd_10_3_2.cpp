@@ -94,7 +94,6 @@ void decode(string encoded_string, string& decoded_string, const unordered_map<c
 					// Chop off token and start over
 					encoded_string = encoded_string.substr(token.length(), encoded_string.length() - token.length());
 					found_token = true;
-					
 					break;
 				}
 			}
