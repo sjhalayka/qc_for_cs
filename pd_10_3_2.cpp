@@ -312,13 +312,14 @@ int main(void)
 	//	plaintext += rand() % 26 + 'A';
 
 
+	// Use any type with the basic_string, not just chars
 	basic_string<float> plaintext = { 1.0f, 0.5f, 1.0f, -0.25f };
 
 	huffman_codec<float> h;
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
-	cout << "Original string was: ";// << plaintext << endl;
+	cout << "Original string was: ";
 
 	for (size_t i = 0; i < plaintext.size(); i++)
 		cout << plaintext[i] << ' ';
@@ -333,7 +334,7 @@ int main(void)
 
 	basic_string<float> decoded_string;
 	h.get_decoded_string(encoded_string, decoded_string);
-	cout << "Decoded string is:   ";// << decoded_string << endl
+	cout << "Decoded string is:   ";
 
 	for (size_t i = 0; i < decoded_string.size(); i++)
 		cout << decoded_string[i] << ' ';
@@ -345,8 +346,8 @@ int main(void)
 	size_t num_map_bits = h.get_map_bit_count();
 
 	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
-	size_t num_decoded_bits = decoded_string.size()*sizeof(char)*8;
-	float scale = static_cast<float>(num_encoded_bits)/static_cast<float>(num_decoded_bits);
+	size_t num_decoded_bits = decoded_string.size() * sizeof(float)*8;
+	float scale = static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
 	// Scale is less than 1.0 if compression occurs
 	cout << "Scale: " << scale << endl;
