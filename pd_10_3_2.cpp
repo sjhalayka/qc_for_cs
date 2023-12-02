@@ -121,11 +121,14 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 
 		if (found_token)
 		{
+			// Slide window by token size number of steps,
+			// then reset window width to 1
 			begin_index += token.size();
 			len = 1;
 		}
 		else
 		{
+			// Expand window width by 1 step
 			len++;
 		}
 	}
