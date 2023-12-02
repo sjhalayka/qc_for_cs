@@ -106,9 +106,10 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 
 	// Sliding window of variable length
 	const size_t encoded_len = encoded_string.length();
-	size_t begin_index = 0;
-	size_t len = min_bits;
+	size_t begin_index = 0; // Start at the very beginning of the string
+	size_t len = min_bits; // Don't waste time by starting at len = 1 if it's not necessary
 
+	// While stuff to parse 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
 		const string token = encoded_string.substr(begin_index, len);
