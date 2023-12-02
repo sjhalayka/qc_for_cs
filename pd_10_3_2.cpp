@@ -98,20 +98,22 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 	}
 
 	// Get the minimum token size
-	size_t min_bits = static_cast<size_t>(-1); // A very large number
+	size_t min_bits = static_cast<size_t>(-1); // Casting the number -1 transforms it into the largest possible value for a size_t
 
 	for (const auto pair : huffman_codes)
 		if (pair.second.size() < min_bits)
 			min_bits = pair.second.size();
 
-	// Use a sliding window of variable length
 	const size_t encoded_len = encoded_string.length();
+
+	// Use a sliding window of variable length
 	size_t begin_index = 0; // Start at the very beginning of the string
 	size_t len = min_bits; // Don't waste time by starting at len = 1 if it's not necessary
 
 	// While stuff to parse 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
+		// Match token with map element
 		const string token = encoded_string.substr(begin_index, len);
 
 		bool found_token = false;
