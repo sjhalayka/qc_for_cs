@@ -28,6 +28,7 @@ private:
 	unordered_map<char, string> huffman_codes;
 
 	size_t map_bit_count;
+	string text;
 
 public:
 	huffman_codec(const string &plaintext)
@@ -37,7 +38,7 @@ public:
 
 	huffman_codec(void)
 	{
-
+		map_bit_count = 0;
 	}
 
 	~huffman_codec(void)
@@ -47,9 +48,16 @@ public:
 
 	void set_plaintext(const string& plaintext)
 	{
+		if (plaintext == "")
+			return;
+
+		text = plaintext;
+
 		clean_up();
 
 		init_huffman_codes(plaintext);
+
+		map_bit_count = 0;
 
 		for (const auto pair : huffman_codes)
 			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
@@ -75,11 +83,11 @@ public:
 		huffman_codes_output = huffman_codes;
 	}
 	
-	bool get_encoded_string(string& plaintext, string &encoded_string)
+	bool get_encoded_string(string &encoded_string)
 	{
 		encoded_string = "";
 
-		for (char c : plaintext)
+		for (char c : text)
 			encoded_string += huffman_codes[c];
 
 		return true;
@@ -298,19 +306,18 @@ int main(void)
 
 	//string plaintext;
 
-	//for (size_t i = 0; i < 10000000; i++)
-	//	plaintext += rand() % 26 + 'A';
+	for (size_t i = 0; i < 10000000; i++)
+		plaintext += rand() % 26 + 'A';
 
 
 	huffman_codec h;
 	h.set_plaintext(plaintext);
-
 	h.print_huffman_codes();
 
 	cout << "Original string was: " << plaintext << endl;
 
 	string encoded_string = "";
-	h.get_encoded_string(plaintext, encoded_string);
+	h.get_encoded_string(encoded_string);
 	cout << "Encoded string is:   " << encoded_string << endl;
 
 	string decoded_string = "";
