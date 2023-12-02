@@ -302,7 +302,6 @@ private:
 
 int main(void)
 {
-
 	// Strings with lower entropy produce higher compression rates
 	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
 	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -311,6 +310,7 @@ int main(void)
 
 	//for (size_t i = 0; i < 10000000; i++)
 	//	plaintext += rand() % 26 + 'A';
+
 
 	basic_string<float> plaintext = { 1.0f, 0.5f, 1.0f, -0.25f };
 
@@ -339,6 +339,7 @@ int main(void)
 		cout << decoded_string[i] << ' ';
 
 	cout << endl;
+
 
 	// The number of map bits becomes negligible for large encoded string length
 	size_t num_map_bits = h.get_map_bit_count();
