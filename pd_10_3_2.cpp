@@ -150,6 +150,7 @@ public:
 		return true;
 	}
 
+private:
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map.
 	void encode(Node* root, const string str, unordered_map<char, string>& huffman_codes)
@@ -164,8 +165,7 @@ public:
 		encode(root->left, str + "0", huffman_codes);
 		encode(root->right, str + "1", huffman_codes);
 	}
-
-private:
+	
 	// Function to allocate a new tree node
 	Node* getNode(const char ch, const int freq, Node* left, Node* right)
 	{
