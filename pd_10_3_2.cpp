@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include <queue>
-#include <unordered_map>
 #include <map>
 #include <algorithm>
 #include <complex>
@@ -32,23 +31,27 @@ public:
 	Node<T>* left, * right;
 };
 
-// We must do it like this manually because there is no standard hash function for complex<float>
-// even though it's a standard type :(
-class complex_float_hash
+bool operator<(const complex<float>& left, const complex<float>& right)
 {
-public:
-	size_t operator()(const complex<float> &k) const
-	{
-		return ((hash<float>()(k.real()) ^ (hash<float>()(k.imag()) << 1)) >> 1);
-	}
-};
+	if (right.real() > left.real())
+		return true;
+	else if (right.real() < left.real())
+		return false;
+
+	if (right.imag() > left.imag())
+		return true;
+	else if (right.imag() < left.imag())
+		return false;
+
+	return false;
+}
 
 template <typename T>
 class huffman_codec
 {	
 private:
 	vector<Node<T>*> nodes_to_clean_up;
-	unordered_map<T, string, complex_float_hash> huffman_codes;
+	map<T, string> huffman_codes;
 
 	size_t map_bit_count;
 	vector<T> text;
@@ -102,7 +105,7 @@ public:
 		cout << endl;
 	}
 
-	void get_huffman_codes(unordered_map<T, string, complex_float_hash> &huffman_codes_output)
+	void get_huffman_codes(map<T, string> &huffman_codes_output)
 	{
 		huffman_codes_output = huffman_codes;
 	}
@@ -197,7 +200,7 @@ public:
 private:
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map.
-	void encode(Node<T>* root, const string str, unordered_map<T, string, complex_float_hash>& huffman_codes)
+	void encode(Node<T>* root, const string str, map<T, string>& huffman_codes)
 	{
 		if (root == nullptr)
 			return;
@@ -269,7 +272,7 @@ private:
 
 		// count frequency of appearance of each character
 		// and store it in a map
-		unordered_map<T, int, complex_float_hash> freq;
+		map<T, int> freq;
 
 		for (T ch : input)
 			freq[ch]++;
@@ -330,12 +333,14 @@ int main(void)
 	const complex<float> c = complex<float>(-1.0f, -1.0f) / sqrtf(6.0f);
 	const complex<float> d = complex<float>( 1.0f, -1.0f) / sqrtf(6.0f);
 
+	// Vectors with lower entropy produce higher compression rates
 	vector<complex<float>> plaintext = { a, b, c, d, a, u, u, u };
 
 	huffman_codec<complex<float>> h;
 
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
+
 
 	cout << "Original string was: ";
 
