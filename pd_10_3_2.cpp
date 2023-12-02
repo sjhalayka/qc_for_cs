@@ -40,7 +40,7 @@ public:
 	huffman_codec(void)
 	{
 		map_bit_count = 0;
-		text = "";
+		text.clear();
 	}
 
 	~huffman_codec(void)
@@ -48,18 +48,18 @@ public:
 		clean_up(); 
 	};
 
-	void set_plaintext(const string& plaintext)
+	void set_plaintext(const basic_string<T>& plaintext)
 	{
 		map_bit_count = 0;
 
-		if (plaintext == "")
+		if (plaintext.size() == 0)
 			return;
 
 		text = plaintext;
 
 		clean_up();
 
-		init_huffman_codes(plaintext);
+		init_huffman_codes(text);
 
 		for (const auto pair : huffman_codes)
 			map_bit_count += sizeof(T) * 8 + pair.second.size(); // 8 bits per key + n bits per element
@@ -89,15 +89,15 @@ public:
 	{
 		encoded_string = "";
 
-		for (const char c : text)
+		for (const T c : text)
 			encoded_string += huffman_codes[c];
 
 		return true;
 	}
 
-	bool get_decoded_string(const string& encoded_string, string& decoded_string)
+	bool get_decoded_string(const string& encoded_string, basic_string<T>& decoded_string)
 	{
-		decoded_string = "";
+		decoded_string.clear();
 
 		if (huffman_codes.size() == 0 || encoded_string == "")
 			return false;
@@ -236,7 +236,7 @@ private:
 		return true;
 	}
 
-	void init_huffman_codes(const string& input)
+	void init_huffman_codes(const basic_string<T>& input)
 	{
 		huffman_codes.clear();
 
@@ -302,22 +302,28 @@ private:
 
 int main(void)
 {
+
 	// Strings with lower entropy produce higher compression rates
 	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
-	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
 	//string plaintext;
 
 	//for (size_t i = 0; i < 10000000; i++)
 	//	plaintext += rand() % 26 + 'A';
 
+	basic_string<float> plaintext = { 1.0f, 0.5f, 1.0f, -0.25f };
 
-	huffman_codec<char> h;
+	huffman_codec<float> h;
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
-	
-	cout << "Original string was: " << plaintext << endl;
+	cout << "Original string was: ";// << plaintext << endl;
+
+	for (size_t i = 0; i < plaintext.size(); i++)
+		cout << plaintext[i] << ' ';
+
+	cout << endl;
 
 
 	string encoded_string = "";
@@ -325,10 +331,14 @@ int main(void)
 	cout << "Encoded string is:   " << encoded_string << endl;
 
 
-	string decoded_string = "";
+	basic_string<float> decoded_string;
 	h.get_decoded_string(encoded_string, decoded_string);
-	cout << "Decoded string is:   " << decoded_string << endl;
+	cout << "Decoded string is:   ";// << decoded_string << endl
 
+	for (size_t i = 0; i < decoded_string.size(); i++)
+		cout << decoded_string[i] << ' ';
+
+	cout << endl;
 
 	// The number of map bits becomes negligible for large encoded string length
 	size_t num_map_bits = h.get_map_bit_count();
