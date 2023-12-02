@@ -13,19 +13,20 @@ using namespace std;
 // also see:
 // Mastering Algorithms with C by Kyle Loudon
 
+template <typename T>
 class huffman_codec
 {
 	class Node
 	{
 	public:
-		char ch;
+		T ch;
 		int freq;
 		Node* left, * right;
 	};
 
 private:
 	vector<Node*> nodes_to_clean_up;
-	unordered_map<char, string> huffman_codes;
+	unordered_map<T, string> huffman_codes;
 
 	size_t map_bit_count;
 	string text;
@@ -61,7 +62,7 @@ public:
 		init_huffman_codes(plaintext);
 
 		for (const auto pair : huffman_codes)
-			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
+			map_bit_count += sizeof(T) * 8 + pair.second.size(); // 8 bits per key + n bits per element
 	}
 
 	size_t get_map_bit_count(void)
@@ -79,7 +80,7 @@ public:
 		cout << endl;
 	}
 
-	void get_huffman_codes(unordered_map<char, string> &huffman_codes_output)
+	void get_huffman_codes(unordered_map<T, string> &huffman_codes_output)
 	{
 		huffman_codes_output = huffman_codes;
 	}
@@ -103,7 +104,7 @@ public:
 
 		if (huffman_codes.size() == 1)
 		{
-			const char c = huffman_codes.begin()->first; // should be '0'
+			const T c = huffman_codes.begin()->first; // should be '0'
 
 			for (size_t i = 0; i < encoded_string.size(); i++)
 				decoded_string += c;
@@ -174,7 +175,7 @@ public:
 private:
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map.
-	void encode(Node* root, const string str, unordered_map<char, string>& huffman_codes)
+	void encode(Node* root, const string str, unordered_map<T, string>& huffman_codes)
 	{
 		if (root == nullptr)
 			return;
@@ -188,7 +189,7 @@ private:
 	}
 	
 	// Function to allocate a new tree node
-	Node* getNode(const char ch, const int freq, Node* left, Node* right)
+	Node* getNode(const T ch, const int freq, Node* left, Node* right)
 	{
 		Node* node = new Node();
 		nodes_to_clean_up.push_back(node);
@@ -246,9 +247,9 @@ private:
 
 		// count frequency of appearance of each character
 		// and store it in a map
-		unordered_map<char, int> freq;
+		unordered_map<T, int> freq;
 
-		for (char ch : input)
+		for (T ch : input)
 			freq[ch]++;
 
 		if (freq.size() == 1)
@@ -311,7 +312,7 @@ int main(void)
 	//	plaintext += rand() % 26 + 'A';
 
 
-	huffman_codec h;
+	huffman_codec<char> h;
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
