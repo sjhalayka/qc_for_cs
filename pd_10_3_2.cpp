@@ -97,10 +97,17 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		return;
 	}
 
+	// Get the minimum token size
+	size_t min_bits = static_cast<size_t>(-1); // A very large number
+
+	for (const auto pair : huffman_codes)
+		if (pair.second.size() < min_bits)
+			min_bits = pair.second.size();
+
 	// Sliding window of variable length
 	const size_t encoded_len = encoded_string.length();
 	size_t begin_index = 0;
-	size_t len = 1;
+	size_t len = min_bits;
 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
@@ -108,7 +115,7 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 
 		bool found_token = false;
 
-		for (auto pair : huffman_codes)
+		for (const auto pair : huffman_codes)
 		{
 			if (pair.second == token)
 			{
@@ -121,9 +128,9 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		if (found_token)
 		{
 			// Slide window by token size number of steps,
-			// then reset window length to 1
+			// then reset window length to the minumum
 			begin_index += token.size();
-			len = 1;
+			len = min_bits;
 		}
 		else
 		{
@@ -204,7 +211,7 @@ int main(void)
 
 	//string plaintext;
 
-	//for (size_t i = 0; i < 10000000; i++)
+	//for (size_t i = 0; i < 100; i++)
 	//	plaintext += rand() % 26 + 'A';
 
 
