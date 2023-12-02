@@ -32,16 +32,28 @@ private:
 public:
 	huffman_codec(const string &plaintext)
 	{
-		init_huffman_codes(plaintext);
-
-		for (const auto pair : huffman_codes)
-			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
+		set_plaintext(plaintext);
 	};
+
+	huffman_codec(void)
+	{
+
+	}
 
 	~huffman_codec(void)
 	{ 
 		clean_up(); 
 	};
+
+	void set_plaintext(const string& plaintext)
+	{
+		clean_up();
+
+		init_huffman_codes(plaintext);
+
+		for (const auto pair : huffman_codes)
+			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
+	}
 
 	size_t get_map_bit_count(void)
 	{
@@ -192,10 +204,15 @@ private:
 
 	void clean_up(void)
 	{
+		if (nodes_to_clean_up.size() == 0)
+			return;
+
 		cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
 
 		for (size_t i = 0; i < nodes_to_clean_up.size(); i++)
 			delete nodes_to_clean_up[i];
+
+		nodes_to_clean_up.clear();
 	}
 
 	bool is_valid_window(const size_t string_length, const size_t begin_window_index, const size_t window_length)
@@ -285,7 +302,9 @@ int main(void)
 	//	plaintext += rand() % 26 + 'A';
 
 
-	huffman_codec h(plaintext);
+	huffman_codec h;
+	h.set_plaintext(plaintext);
+
 	h.print_huffman_codes();
 
 	cout << "Original string was: " << plaintext << endl;
