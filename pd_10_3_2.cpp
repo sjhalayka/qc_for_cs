@@ -286,14 +286,9 @@ int main(void)
 
 
 	huffman_codec h(plaintext);
-
 	h.print_huffman_codes();
 
-
-
-
 	cout << "Original string was: " << plaintext << endl;
-
 
 	string encoded_string = "";
 
@@ -313,7 +308,6 @@ int main(void)
 
 	// Scale is less than 1.0 if compression occurs
 	cout << "Scale: " << scale << endl;
-
 
 	return 0;
 }
