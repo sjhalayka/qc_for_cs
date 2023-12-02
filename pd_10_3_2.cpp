@@ -342,7 +342,7 @@ int main(void)
 	h.print_huffman_codes();
 
 
-	cout << "Original string was: ";
+	cout << "Original vector was: ";
 
 	for (size_t i = 0; i < plaintext.size(); i++)
 		cout << plaintext[i] << ' ';
@@ -357,7 +357,7 @@ int main(void)
 
 	vector<complex<float>> decoded_string;
 	h.get_decoded_string(encoded_string, decoded_string);
-	cout << "Decoded string is:   ";
+	cout << "Decoded vector is:   ";
 
 	for (size_t i = 0; i < decoded_string.size(); i++)
 		cout << decoded_string[i] << ' ';
