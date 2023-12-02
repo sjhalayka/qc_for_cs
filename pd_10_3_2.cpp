@@ -13,16 +13,16 @@ using namespace std;
 // also see:
 // Mastering Algorithms with C by Kyle Loudon
 
-class Node
-{
-public:
-	char ch;
-	int freq;
-	Node* left, * right;
-};
-
 class huffman_codec
 {
+	class Node
+	{
+	public:
+		char ch;
+		int freq;
+		Node* left, * right;
+	};
+
 private:
 	vector<Node*> nodes_to_clean_up;
 	unordered_map<char, string> huffman_codes;
@@ -32,7 +32,7 @@ private:
 public:
 	huffman_codec(const string &plaintext)
 	{
-		init_codes(plaintext);
+		init_huffman_codes(plaintext);
 
 		for (const auto pair : huffman_codes)
 			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
@@ -209,7 +209,7 @@ private:
 		return true;
 	}
 
-	void init_codes(const string& input)
+	void init_huffman_codes(const string& input)
 	{
 		huffman_codes.clear();
 
