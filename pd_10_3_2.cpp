@@ -3,7 +3,9 @@
 #include <string>
 #include <queue>
 #include <unordered_map>
+#include <map>
 #include <algorithm>
+#include <complex>
 using namespace std;
 
 
@@ -13,29 +15,47 @@ using namespace std;
 // also see:
 // Mastering Algorithms with C by Kyle Loudon
 
+
+template <typename T>
+class Node
+{
+public:
+	Node(void)
+	{
+		ch = 0;
+		freq = 0;
+		left = right = nullptr;
+	}
+
+	T ch;
+	int freq;
+	Node<T>* left, * right;
+};
+
+class complex_float_hash
+{
+public:
+	std::size_t operator()(const complex<float>& k) const
+	{
+		return ((hash<float>()(k.real()) ^ (hash<float>()(k.imag()) << 1)) >> 1);
+	}
+};
+
 template <typename T>
 class huffman_codec
-{
-	class Node
-	{
-	public:
-		T ch;
-		int freq;
-		Node* left, * right;
-	};
-
+{	
 private:
-	vector<Node*> nodes_to_clean_up;
-	unordered_map<T, string> huffman_codes;
+	vector<Node<T>*> nodes_to_clean_up;
+	unordered_map<T, string, complex_float_hash> huffman_codes;
 
 	size_t map_bit_count;
-	basic_string<T> text;
+	vector<T> text;
 
 public:
-	huffman_codec(const string &plaintext)
+	huffman_codec(const vector<T>& plaintext)
 	{
 		set_plaintext(plaintext);
-	};
+	}
 
 	huffman_codec(void)
 	{
@@ -46,9 +66,9 @@ public:
 	~huffman_codec(void)
 	{ 
 		clean_up(); 
-	};
+	}
 
-	void set_plaintext(const basic_string<T>& plaintext)
+	void set_plaintext(const vector<T>& plaintext)
 	{
 		map_bit_count = 0;
 
@@ -80,7 +100,7 @@ public:
 		cout << endl;
 	}
 
-	void get_huffman_codes(unordered_map<T, string> &huffman_codes_output)
+	void get_huffman_codes(unordered_map<T, string, complex_float_hash> &huffman_codes_output)
 	{
 		huffman_codes_output = huffman_codes;
 	}
@@ -95,7 +115,7 @@ public:
 		return true;
 	}
 
-	bool get_decoded_string(const string& encoded_string, basic_string<T>& decoded_string)
+	bool get_decoded_string(const string& encoded_string, vector<T>& decoded_string)
 	{
 		decoded_string.clear();
 
@@ -107,7 +127,7 @@ public:
 			const T c = huffman_codes.begin()->first; // should be '0'
 
 			for (size_t i = 0; i < encoded_string.size(); i++)
-				decoded_string += c;
+				decoded_string.push_back(c);
 
 			return true;
 		}
@@ -149,7 +169,7 @@ public:
 			{
 				if (pair.second == token)
 				{
-					decoded_string += pair.first;
+					decoded_string.push_back(pair.first);
 					found_token = true;
 					break;
 				}
@@ -175,7 +195,7 @@ public:
 private:
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map.
-	void encode(Node* root, const string str, unordered_map<T, string>& huffman_codes)
+	void encode(Node<T>* root, const string str, unordered_map<T, string, complex_float_hash>& huffman_codes)
 	{
 		if (root == nullptr)
 			return;
@@ -189,9 +209,9 @@ private:
 	}
 	
 	// Function to allocate a new tree node
-	Node* getNode(const T ch, const int freq, Node* left, Node* right)
+	Node<T>* getNode(const T ch, const int freq, Node<T>* left, Node<T>* right)
 	{
-		Node* node = new Node();
+		Node<T>* node = new Node<T>();
 		nodes_to_clean_up.push_back(node);
 
 		node->ch = ch;
@@ -203,9 +223,9 @@ private:
 	}
 
 	// Comparison object to be used to order the heap
-	struct comp
+	struct node_comp
 	{
-		bool operator()(Node* l, Node* r)
+		bool operator()(const Node<T>* l, const Node<T>* r)
 		{
 			// highest priority item has lowest frequency
 			return l->freq > r->freq;
@@ -236,18 +256,18 @@ private:
 		return true;
 	}
 
-	void init_huffman_codes(const basic_string<T>& input)
+	void init_huffman_codes(const vector<T>& input)
 	{
 		huffman_codes.clear();
 
 		if (input.size() == 0)
 			return;
 
-		Node* root = nullptr;
+		Node<T>* root = nullptr;
 
 		// count frequency of appearance of each character
 		// and store it in a map
-		unordered_map<T, int> freq;
+		unordered_map<T, int, complex_float_hash> freq;
 
 		for (T ch : input)
 			freq[ch]++;
@@ -262,7 +282,7 @@ private:
 
 		// Create a priority queue to store live nodes of
 		// Huffman tree;
-		priority_queue<Node*, vector<Node*>, comp> pq;
+		priority_queue<Node<T>*, vector<Node<T>*>, node_comp> pq;
 
 		// Create a leaf node for each character and add it
 		// to the priority queue.
@@ -274,10 +294,10 @@ private:
 		{
 			// Remove the two nodes of highest priority
 			// (lowest frequency) from the queue
-			Node* left = pq.top();
+			Node<T>* left = pq.top();
 			pq.pop();
 
-			Node* right = pq.top();
+			Node<T>* right = pq.top();
 			pq.pop();
 
 			// Create a new internal node with these two nodes
@@ -302,20 +322,16 @@ private:
 
 int main(void)
 {
-	// Strings with lower entropy produce higher compression rates
-	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
-	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	
-	//string plaintext;
+	const complex<float> u = 1.0f;
+	const complex<float> a = u / sqrtf(2.0f);
+	const complex<float> b = complex<float>(-1.0f,  1.0f) / sqrtf(6.0f);
+	const complex<float> c = complex<float>(-1.0f, -1.0f) / sqrtf(6.0f);
+	const complex<float> d = complex<float>( 1.0f, -1.0f) / sqrtf(6.0f);
 
-	//for (size_t i = 0; i < 10000000; i++)
-	//	plaintext += rand() % 26 + 'A';
+	vector<complex<float>> plaintext = { a, b, c, d, a, u, u, u };
 
+	huffman_codec<complex<float>> h;
 
-	// Use any type with the basic_string, not just chars
-	basic_string<float> plaintext = { 1.0f, 0.5f, 1.0f, -0.25f };
-
-	huffman_codec<float> h;
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
@@ -332,7 +348,7 @@ int main(void)
 	cout << "Encoded string is:   " << encoded_string << endl;
 
 
-	basic_string<float> decoded_string;
+	vector<complex<float>> decoded_string;
 	h.get_decoded_string(encoded_string, decoded_string);
 	cout << "Decoded string is:   ";
 
@@ -346,7 +362,7 @@ int main(void)
 	size_t num_map_bits = h.get_map_bit_count();
 
 	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
-	size_t num_decoded_bits = decoded_string.size() * sizeof(float)*8;
+	size_t num_decoded_bits = decoded_string.size() * sizeof(complex<float>)*8;
 	float scale = static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
 	// Scale is less than 1.0 if compression occurs
