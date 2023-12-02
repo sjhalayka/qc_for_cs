@@ -29,7 +29,7 @@ private:
 	unordered_map<T, string> huffman_codes;
 
 	size_t map_bit_count;
-	string text;
+	basic_string<T> text;
 
 public:
 	huffman_codec(const string &plaintext)
@@ -89,7 +89,7 @@ public:
 	{
 		encoded_string = "";
 
-		for (char c : text)
+		for (const char c : text)
 			encoded_string += huffman_codes[c];
 
 		return true;
@@ -217,7 +217,7 @@ private:
 		if (nodes_to_clean_up.size() == 0)
 			return;
 
-		cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
+		//cout << "Cleaning up " << nodes_to_clean_up.size() << " nodes." << endl;
 
 		for (size_t i = 0; i < nodes_to_clean_up.size(); i++)
 			delete nodes_to_clean_up[i];
