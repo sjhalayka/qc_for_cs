@@ -291,7 +291,6 @@ int main(void)
 	cout << "Original string was: " << plaintext << endl;
 
 	string encoded_string = "";
-
 	h.get_encoded_string(plaintext, encoded_string);
 	cout << "Encoded string is:   " << encoded_string << endl;
 
