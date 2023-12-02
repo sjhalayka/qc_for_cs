@@ -80,12 +80,12 @@ bool is_valid_window(const size_t string_length, const size_t begin_window_index
 	return true;
 }
 
-void decode(const string &encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
+bool decode(const string &encoded_string, string& decoded_string, const unordered_map<char, string>& huffman_codes)
 {
 	decoded_string = "";
 
 	if(huffman_codes.size() == 0 || encoded_string == "")
-		return;
+		return false;
 
 	if (huffman_codes.size() == 1)
 	{
@@ -94,7 +94,7 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		for (size_t i = 0; i < encoded_string.size(); i++)
 			decoded_string += c;
 
-		return;
+		return true;
 	}
 
 	// Get the minimum and maximum token size
@@ -119,10 +119,11 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 	// While stuff to parse 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
-		//if (len > max_bits)
-		//{
-		//	// Something weird happened
-		//}
+		if (len > max_bits)
+		{
+			// No match was found up to here, which is weird
+			return false;
+		}
 
 		// Match token with map element
 		const string token = encoded_string.substr(begin_index, len);
@@ -152,6 +153,8 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 			len++;
 		}
 	}
+
+	return true;
 }
 
 void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
@@ -220,8 +223,8 @@ void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
 int main(void)
 {
 	// Strings with lower entropy produce higher compression rates
-	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
-	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
+	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	//string plaintext;
 
