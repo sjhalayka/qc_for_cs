@@ -121,7 +121,7 @@ bool decode(const string &encoded_string, string& decoded_string, const unordere
 	{
 		if (len > max_bits)
 		{
-			// No match was found up to here, which is weird
+			// No match was found up to here, which is exceptionally weird
 			return false;
 		}
 
