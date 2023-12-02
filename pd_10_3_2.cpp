@@ -201,8 +201,8 @@ int main()
 
 	//string plaintext;
 
-	//for (size_t i = 0; i < 1000000; i++)
-	//	plaintext += rand() % 16;
+	//for (size_t i = 0; i < 10000000; i++)
+	//	plaintext += rand() % 26 + 'A';
 
 	unordered_map<char, string> huffman_codes;
 	get_codes(plaintext, huffman_codes);
