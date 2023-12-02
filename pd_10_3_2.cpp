@@ -39,6 +39,7 @@ public:
 	huffman_codec(void)
 	{
 		map_bit_count = 0;
+		text = "";
 	}
 
 	~huffman_codec(void)
@@ -48,6 +49,8 @@ public:
 
 	void set_plaintext(const string& plaintext)
 	{
+		map_bit_count = 0;
+
 		if (plaintext == "")
 			return;
 
@@ -56,8 +59,6 @@ public:
 		clean_up();
 
 		init_huffman_codes(plaintext);
-
-		map_bit_count = 0;
 
 		for (const auto pair : huffman_codes)
 			map_bit_count += sizeof(char) * 8 + pair.second.size(); // 8 bits per key + n bits per element
@@ -306,23 +307,27 @@ int main(void)
 
 	//string plaintext;
 
-	for (size_t i = 0; i < 10000000; i++)
-		plaintext += rand() % 26 + 'A';
+	//for (size_t i = 0; i < 10000000; i++)
+	//	plaintext += rand() % 26 + 'A';
 
 
 	huffman_codec h;
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
+	
 	cout << "Original string was: " << plaintext << endl;
+
 
 	string encoded_string = "";
 	h.get_encoded_string(encoded_string);
 	cout << "Encoded string is:   " << encoded_string << endl;
 
+
 	string decoded_string = "";
 	h.get_decoded_string(encoded_string, decoded_string);
 	cout << "Decoded string is:   " << decoded_string << endl;
+
 
 	// The number of map bits becomes negligible for large encoded string length
 	size_t num_map_bits = h.get_map_bit_count();
