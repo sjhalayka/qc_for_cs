@@ -84,7 +84,7 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 {
 	decoded_string = "";
 
-	if(huffman_codes.size() == 0)
+	if(huffman_codes.size() == 0 || encoded_string == "")
 		return;
 
 	if (huffman_codes.size() == 1)
