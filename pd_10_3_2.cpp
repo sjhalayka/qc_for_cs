@@ -97,12 +97,18 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		return;
 	}
 
-	// Get the minimum token size
+	// Get the minimum and maximum token size
 	size_t min_bits = static_cast<size_t>(-1); // Casting the number -1 transforms it into the largest possible value that can be held by a size_t
+	size_t max_bits = 0;
 
 	for (const auto pair : huffman_codes)
+	{
 		if (pair.second.size() < min_bits)
 			min_bits = pair.second.size();
+
+		if (pair.second.size() > max_bits)
+			max_bits = pair.second.size();
+	}
 
 	const size_t encoded_len = encoded_string.length();
 
@@ -113,6 +119,11 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 	// While stuff to parse 
 	while (is_valid_window(encoded_len, begin_index, len))
 	{
+		//if (len > max_bits)
+		//{
+		//	// Something weird happened
+		//}
+
 		// Match token with map element
 		const string token = encoded_string.substr(begin_index, len);
 
