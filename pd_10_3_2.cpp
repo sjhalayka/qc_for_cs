@@ -98,7 +98,7 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 	}
 
 	// Get the minimum token size
-	size_t min_bits = static_cast<size_t>(-1); // Casting the number -1 transforms it into the largest possible value for a size_t
+	size_t min_bits = static_cast<size_t>(-1); // Casting the number -1 transforms it into the largest possible value that can be held by a size_t
 
 	for (const auto pair : huffman_codes)
 		if (pair.second.size() < min_bits)
