@@ -32,10 +32,12 @@ public:
 	Node<T>* left, * right;
 };
 
+// We must do it like this manually because there is no standard hash function for complex<float>
+// even though it's a standard type :(
 class complex_float_hash
 {
 public:
-	std::size_t operator()(const complex<float>& k) const
+	size_t operator()(const complex<float> &k) const
 	{
 		return ((hash<float>()(k.real()) ^ (hash<float>()(k.imag()) << 1)) >> 1);
 	}
