@@ -97,7 +97,7 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 		return;
 	}
 
-	// Sliding window
+	// Sliding window of variable width
 	const size_t encoded_len = encoded_string.length();
 	size_t begin_index = 0;
 	size_t len = 1;
@@ -113,7 +113,6 @@ void decode(const string &encoded_string, string& decoded_string, const unordere
 			if (pair.second == token)
 			{
 				decoded_string += pair.first;
-
 				found_token = true;
 				break;
 			}
