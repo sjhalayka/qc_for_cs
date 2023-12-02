@@ -223,8 +223,8 @@ void get_codes(const string& input, unordered_map<char, string>& huffman_codes)
 int main(void)
 {
 	// Strings with lower entropy produce higher compression rates
-	string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
-	//string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	//string plaintext = "AAAAAAAAAAAAAAAAAAAAAAAAAA";
+	string plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	//string plaintext;
 
@@ -263,7 +263,7 @@ int main(void)
 	// The number of map bits becomes negligible for large encoded string length
 	size_t num_map_bits = 0;
 
-	for (auto pair : huffman_codes)
+	for (const auto pair : huffman_codes)
 		num_map_bits += sizeof(char)*8 + pair.second.size(); // 8 bits per key + n bits per element
 
 	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
