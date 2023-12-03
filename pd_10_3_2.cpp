@@ -123,7 +123,7 @@ public:
 		return true;
 	}
 
-	bool get_decoded_string(const string& encoded_string, vector<T>& decoded_string)
+	bool get_decoded_vector(const string& encoded_string, vector<T>& decoded_string)
 	{
 		decoded_string.clear();
 
@@ -341,7 +341,6 @@ int main(void)
 
 
 	huffman_codec<complex<float>> h;
-
 	h.set_plaintext(plaintext);
 	h.print_huffman_codes();
 
@@ -359,12 +358,12 @@ int main(void)
 	cout << "Encoded string is:   " << encoded_string << endl;
 
 
-	vector<complex<float>> decoded_string;
-	h.get_decoded_string(encoded_string, decoded_string);
+	vector<complex<float>> decoded_vector;
+	h.get_decoded_vector(encoded_string, decoded_vector);
 	cout << "Decoded vector is:   ";
 
-	for (size_t i = 0; i < decoded_string.size(); i++)
-		cout << decoded_string[i] << ' ';
+	for (size_t i = 0; i < decoded_vector.size(); i++)
+		cout << decoded_vector[i] << ' ';
 
 	cout << endl;
 
@@ -373,7 +372,7 @@ int main(void)
 	size_t num_map_bits = h.get_map_bit_count();
 
 	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
-	size_t num_decoded_bits = decoded_string.size() * sizeof(complex<float>)*8;
+	size_t num_decoded_bits = decoded_vector.size() * sizeof(complex<float>)*8;
 	float scale = static_cast<float>(num_encoded_bits) / static_cast<float>(num_decoded_bits);
 
 	// Scale is less than 1.0 if compression occurs
