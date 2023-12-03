@@ -330,7 +330,7 @@ private:
 template <typename T>
 float get_vector_binary_entropy(const vector<T> &v)
 {
-	const size_t length = v.size();
+	const float length = static_cast<float>(v.size());
 
 	float entropy = 0.0f;
 
@@ -341,7 +341,7 @@ float get_vector_binary_entropy(const vector<T> &v)
 
 	for (const auto pair : input_map)
 	{
-		const float probability = pair.second / static_cast<float>(length);
+		const float probability = pair.second / length;
 
 		// See Definition 10.1.1, where we use the binary Shannon entropy
 		entropy += probability * logf(probability);
@@ -392,7 +392,7 @@ int main(void)
 	cout << endl;
 
 
-	// The number of map bits becomes negligible for large encoded string length
+	// The number of map bits becomes negligible for large encoded vector length
 	size_t num_map_bits = h.get_map_bit_count();
 
 	size_t num_encoded_bits = encoded_string.size() + num_map_bits;
