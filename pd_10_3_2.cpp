@@ -15,7 +15,7 @@ using namespace std;
 // Mastering Algorithms with C by Kyle Loudon
 
 
-// For use of complex<float> with map
+// For the use of complex<float> with map
 bool operator<(const complex<float>& left, const complex<float>& right)
 {
 	if (right.real() > left.real())
