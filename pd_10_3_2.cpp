@@ -15,22 +15,8 @@ using namespace std;
 // Mastering Algorithms with C by Kyle Loudon
 
 
-template <typename T>
-class Node
-{
-public:
-	Node(void)
-	{
-		ch = 0;
-		freq = 0;
-		left = right = nullptr;
-	}
 
-	T ch;
-	int freq;
-	Node<T>* left, * right;
-};
-
+// For use of complex<float> with map
 bool operator<(const complex<float>& left, const complex<float>& right)
 {
 	if (right.real() > left.real())
@@ -48,7 +34,24 @@ bool operator<(const complex<float>& left, const complex<float>& right)
 
 template <typename T>
 class huffman_codec
-{	
+{
+public:
+	template <typename T>
+	class Node
+	{
+	public:
+		Node(void)
+		{
+			ch = 0;
+			freq = 0;
+			left = right = nullptr;
+		}
+
+		T ch;
+		int freq;
+		Node<T>* left, * right;
+	};
+
 private:
 	vector<Node<T>*> nodes_to_clean_up;
 	map<T, string> huffman_codes;
@@ -250,7 +253,7 @@ private:
 		nodes_to_clean_up.clear();
 	}
 
-	bool is_valid_window(const size_t string_length, const size_t begin_window_index, const size_t window_length)
+	bool is_valid_window(const size_t string_length, const size_t begin_window_index, const size_t window_length) const
 	{
 		if (begin_window_index >= string_length)
 			return false;
