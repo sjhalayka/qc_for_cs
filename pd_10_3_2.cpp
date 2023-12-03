@@ -335,7 +335,7 @@ float get_vector_binary_entropy(const vector<T> &v)
 
 	map<T, size_t> input_map;
 
-	for (size_t i = 0; i < length; i++)
+	for (size_t i = 0; i < v.size(); i++)
 		input_map[v[i]]++;
 
 	for (const auto pair : input_map)
