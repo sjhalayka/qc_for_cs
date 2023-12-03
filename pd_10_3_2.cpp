@@ -15,7 +15,6 @@ using namespace std;
 // Mastering Algorithms with C by Kyle Loudon
 
 
-
 // For use of complex<float> with map
 bool operator<(const complex<float>& left, const complex<float>& right)
 {
@@ -49,7 +48,7 @@ public:
 
 		T ch;
 		int freq;
-		Node<T>* left, * right;
+		Node<T> *left, *right;
 	};
 
 private:
@@ -123,9 +122,9 @@ public:
 		return true;
 	}
 
-	bool get_decoded_vector(const string& encoded_string, vector<T>& decoded_string)
+	bool get_decoded_vector(const string& encoded_string, vector<T>& decoded_vector)
 	{
-		decoded_string.clear();
+		decoded_vector.clear();
 
 		if (huffman_codes.size() == 0 || encoded_string == "")
 			return false;
@@ -135,7 +134,7 @@ public:
 			const T c = huffman_codes.begin()->first; // should be '0'
 
 			for (size_t i = 0; i < encoded_string.size(); i++)
-				decoded_string.push_back(c);
+				decoded_vector.push_back(c);
 
 			return true;
 		}
@@ -177,7 +176,7 @@ public:
 			{
 				if (pair.second == token)
 				{
-					decoded_string.push_back(pair.first);
+					decoded_vector.push_back(pair.first);
 					found_token = true;
 					break;
 				}
