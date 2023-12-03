@@ -327,6 +327,31 @@ private:
 	}
 };
 
+template <typename T>
+float get_vector_binary_entropy(const vector<T> &v)
+{
+	const size_t length = v.size();
+
+	float total_probability = 0.0f;
+	float binary_shannon_entropy = 0.0f;
+
+	map<T, size_t> input_map;
+
+	for (size_t i = 0; i < length; i++)
+		input_map[v[i]]++;
+
+	for (const auto pair : input_map)
+	{
+		const float probability = pair.second / static_cast<float>(length);
+		total_probability += probability;
+
+		// See Definition 10.1.1, where we use the binary Shannon entropy
+		binary_shannon_entropy += probability * (logf(1.0f / probability) / logf(2.0f));
+	}
+
+	return binary_shannon_entropy;
+}
+
 
 int main(void)
 {
@@ -338,6 +363,7 @@ int main(void)
 
 	// Vectors with lower entropy produce higher compression rates
 	vector<complex<float>> plaintext = { a, b, c, d, a, u, u, u };
+	cout << "Vector entropy: " << get_vector_binary_entropy<complex<float>>(plaintext) << endl;
 
 
 	huffman_codec<complex<float>> h;
