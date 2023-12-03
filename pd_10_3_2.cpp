@@ -90,7 +90,7 @@ public:
 		init_huffman_codes(text);
 
 		for (const auto pair : huffman_codes)
-			map_bit_count += sizeof(T) * 8 + pair.second.size(); // 8 bits per key + n bits per element
+			map_bit_count += sizeof(T) * 8 + pair.second.size(); // m bits per key + n bits per element
 	}
 
 	size_t get_map_bit_count(void)
