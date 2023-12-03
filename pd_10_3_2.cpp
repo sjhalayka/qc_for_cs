@@ -346,8 +346,8 @@ float get_vector_binary_entropy(const vector<T> &v)
 		entropy += probability * logf(probability);
 	}
 
-	if (entropy == 0.0)
-		return 0.0;
+	if (entropy == 0.0f)
+		return 0.0f;
 	
 	return -(entropy / logf(2.0f));
 }
