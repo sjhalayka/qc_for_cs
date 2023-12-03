@@ -339,6 +339,7 @@ int main(void)
 	// Vectors with lower entropy produce higher compression rates
 	vector<complex<float>> plaintext = { a, b, c, d, a, u, u, u };
 
+
 	huffman_codec<complex<float>> h;
 
 	h.set_plaintext(plaintext);
