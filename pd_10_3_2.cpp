@@ -185,7 +185,7 @@ public:
 			if (found_token)
 			{
 				// Slide window by token size number of steps,
-				// then reset window length to the minumum
+				// then reset window length to the minimum
 				begin_index += token.size();
 				len = min_bits;
 			}
