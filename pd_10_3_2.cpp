@@ -374,7 +374,7 @@ int main(void)
 		cout << plaintext[i] << ' ';
 
 	cout << endl;
-
+	
 
 	string encoded_string = "";
 	h.get_encoded_string(encoded_string);
