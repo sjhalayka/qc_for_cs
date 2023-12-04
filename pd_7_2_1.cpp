@@ -32,7 +32,7 @@ int main(void)
 {
 	map<string, vector<vector<string>>> instructions_and_params;
 
-	vector<string> lines = {"var B=[00001111] // before invoking quantum assembler",
+	vector<string> lines = { "var B=[00001111] // before invoking quantum assembler",
 							"INITIALIZE R1",
 							"INITIALIZE R1 B",
 							"INITIALIZE R 2",
@@ -44,12 +44,10 @@ int main(void)
 							"MEASURE R RES",
 							"IF (RES==[10]) THEN APPLY CNOT R ELSE APPLY H R" };
 
-	for(size_t i = 0; i < lines.size(); i++)
+	for (size_t i = 0; i < lines.size(); i++)
 	{
-		string line = lines[i];
-
 		// Chop off the comments
-		vector<string> vs = std_strtok(line, "[//]\\s*");
+		vector<string> vs = std_strtok(lines[i], "[//]\\s*");
 
 		if (vs.size() == 0)
 			continue;
