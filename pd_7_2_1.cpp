@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <unordered_map>
+#include <cctype>
 using namespace std;
 
 
@@ -28,11 +29,159 @@ vector<string> std_strtok(const string& s, const string& regex_s)
 	return tokens;
 }
 
+enum string_type { blank = 99, binary = 1, numeric = 2, alphanumeric = 3};
+
+bool is_string_binary(const string& s)
+{
+	if (s == "")
+		return false;
+
+	for (size_t i = 0; i < s.size(); i++)
+		if (s[i] != '0' && s[i] != '1')
+			return false;
+
+	return true;
+}
+
+bool is_string_positive_integer(const string& s)
+{
+	if (s == "")
+		return false;
+
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		const int is_digit = isdigit(s[i]);
+
+		if (0 == is_digit)
+			return false;
+	}
+
+	return true;
+}
+
+bool is_string_alphanumeric(const string& s)
+{
+	if (s == "")
+		return false;
+
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		const int is_alphanumeric = isalnum(s[i]);
+
+		if (0 == is_alphanumeric)
+			return false;
+	}
+
+	return true;
+}
+
+string_type get_string_type(const string& s)
+{
+	if (is_string_binary(s))
+		return binary;
+
+	if (is_string_positive_integer(s))
+		return numeric;
+
+	if (is_string_alphanumeric(s))
+		return alphanumeric;
+
+	return blank;
+}
+
+
+
+void analyze_instruction_and_params(const string& instruction, vector<vector<string>> params)
+{
+	cout << instruction << endl;
+
+	for (size_t i = 0; i < params.size(); i++)
+	{
+		for (size_t j = 0; j < params[i].size(); j++)
+		{
+			cout << params[i][j] << ' ';
+		}
+
+		cout << endl;
+	}
+
+	cout << endl;
+
+	size_t min_params = static_cast<size_t>(-1); // Casting turns it into the biggest integer value
+	size_t max_params = 0;
+
+	for (size_t i = 0; i < params.size(); i++)
+	{
+		if (params[i].size() > max_params)
+			max_params = params[i].size();
+
+		if (params[i].size() < min_params)
+			min_params = params[i].size();
+	}
+
+	for (size_t i = 0; i < params.size(); i++)
+	{
+		size_t num_blanks_to_add = max_params - params[i].size();
+
+		for (size_t j = 0; j < num_blanks_to_add; j++)
+			params[i].push_back("");
+	}
+
+	cout << min_params << " " << max_params << endl;
+
+	vector<string_type> string_types(max_params, alphanumeric);
+
+
+
+
+
+	for (size_t i = 0; i < params.size(); i++)
+	{
+		for (size_t j = 0; j < params[i].size(); j++)
+		{
+			string_type st = get_string_type(params[i][j]);
+
+			if (st < string_types[i])
+				string_types[i] = st;
+		}
+
+	}
+
+	for (size_t i = 0; i < string_types.size(); i++)
+	{
+		if (string_types[i] == blank)
+			cout << "blank" << endl;
+		else if (string_types[i] == binary)
+			cout << "binary" << endl;
+		else if (string_types[i] == numeric)
+			cout << "numeric" << endl;
+		else if (string_types[i] == alphanumeric)
+			cout << "alphanumeric" << endl;
+	}
+
+	cout << endl;
+
+	//cout << pair.first << endl;
+
+//for (size_t i = 0; i < pair.second.size(); i++)
+//{
+//	for (size_t j = 0; j < pair.second[i].size(); j++)
+//	{
+//		cout << pair.second[i][j] << ' ';
+//	}
+
+//	cout << endl;
+//}
+
+//cout << endl;
+}
+
+
 int main(void)
 {
 	map<string, vector<vector<string>>> instructions_and_params;
 
-	vector<string> lines = { "var B=[00001111] // before invoking quantum assembler",
+	vector<string> lines = {"var B=[00001111] // before invoking quantum assembler",
 							"INITIALIZE R1",
 							"INITIALIZE R1 B",
 							"INITIALIZE R 2",
@@ -42,7 +191,7 @@ int main(void)
 							"MEASURE S1 RES",
 							"APPLY CNOT R",
 							"MEASURE R RES",
-							"IF (RES==[10]) THEN APPLY CNOT R ELSE APPLY H R" };
+							"IF RES==[10] THEN APPLY CNOT R ELSE APPLY H R" };
 
 	for (size_t i = 0; i < lines.size(); i++)
 	{
@@ -52,6 +201,7 @@ int main(void)
 		if (vs.size() == 0)
 			continue;
 
+		// Only keep the first token
 		vs.resize(1);
 
 		// Tokenize the rest by whitespace
@@ -65,24 +215,9 @@ int main(void)
 		instructions_and_params[instruction].push_back(params);
 	}
 
-	for (const auto pair : instructions_and_params)
-	{
-		cout << pair.first << endl;
-
-		for (size_t i = 0; i < pair.second.size(); i++)
-		{
-			for (size_t j = 0; j < pair.second[i].size(); j++)
-			{
-				cout << pair.second[i][j] << ' ';
-			}
-
-			cout << endl;
-		}
-
-		cout << endl;
-	}
-
 	// Classify type by contents
+	for (const auto pair : instructions_and_params)
+		analyze_instruction_and_params(pair.first, pair.second);
 
 	return 0;
 }
