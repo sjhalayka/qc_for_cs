@@ -77,6 +77,9 @@ enum string_type { blank = 0, binary = 4, numeric = 3, alphanumeric = 2, somethi
 
 string_type get_string_type(const string& s)
 {
+	if (s == "")
+		return blank;
+
 	if (is_string_binary(s))
 		return binary;
 
@@ -121,7 +124,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			params[i].push_back("");
 	}
 
-//	cout << min_params << " " << max_params << endl;
+	//	cout << min_params << " " << max_params << endl;
 
 	vector<string_type> string_types(max_params, blank);
 
@@ -136,7 +139,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 
 			string_type st = get_string_type(params[i][j]);
 
-			if (string_types[j] == blank || st > string_types[j])
+			if (string_types[j] == blank || st <  string_types[j])
 				string_types[j] = st;
 		}
 	}
