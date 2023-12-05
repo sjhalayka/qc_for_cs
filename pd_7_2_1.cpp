@@ -164,17 +164,18 @@ int main(void)
 {
 	map<string, vector<vector<string>>> instructions_and_params;
 
-	vector<string> lines = {"var B=[00001111] // before invoking quantum assembler",
-							"INITIALIZE R1",
-							"INITIALIZE R1 B",
-							"INITIALIZE R 2",
-							"U TENSOR H I2",
-							"APPLY U R",
-							"SELECT S1 R 0 1",
-							"MEASURE S1 RES",
-							"APPLY CNOT R",
-							"MEASURE R RES",
-							"IF RES==[10] THEN APPLY CNOT R ELSE APPLY H R" };
+	vector<string> lines = {
+		"var B=[00001111] // before invoking quantum assembler",
+		"INITIALIZE R1",
+		"INITIALIZE R1 B",
+		"INITIALIZE R 2",
+		"U TENSOR H I2",
+		"APPLY U R",
+		"SELECT S1 R 0 1",
+		"MEASURE S1 RES",
+		"APPLY CNOT R",
+		"MEASURE R RES",
+		"IF RES==[10] THEN APPLY CNOT R ELSE APPLY H R" };
 
 	for (size_t i = 0; i < lines.size(); i++)
 	{
