@@ -80,15 +80,13 @@ string_type get_string_type(const string& s)
 	if (s == "")
 		return blank;
 
-	if (is_string_binary(s))
+	else if (is_string_binary(s))
 		return binary;
-
-	if (is_string_positive_integer(s))
+	else if (is_string_positive_integer(s))
 		return numeric;
 
-	if (is_string_alphanumeric(s))
+	else if (is_string_alphanumeric(s))
 		return alphanumeric;
-
 
 
 	return something;
@@ -143,7 +141,9 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 
 			string_type st = get_string_type(params[i][j]);
 
-			if (string_types[i] == something || st < string_types[i])
+			//if (string_types[i] == blank)
+			//	string_types[i] = st;
+			if (st < string_types[i])
 				string_types[i] = st;
 		}
 	}
