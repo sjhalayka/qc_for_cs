@@ -1,3 +1,5 @@
+// http://tph.tuwien.ac.at/~oemer/qcl.html
+
 qufunct query(qureg x,quvoid f,int n) {
   int i;
   for i=0 to #x-1 {     // x -> NOT (x XOR n)
