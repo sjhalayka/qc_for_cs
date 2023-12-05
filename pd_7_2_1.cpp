@@ -73,21 +73,18 @@ bool is_string_alphanumeric(const string& s)
 	return true;
 }
 
-enum string_type { blank = 0, binary = 1, numeric = 2, alphanumeric = 3, something = 4 };
+enum string_type { blank = 0, binary = 4, numeric = 3, alphanumeric = 2, something = 1 };
 
 string_type get_string_type(const string& s)
 {
-	if (s == "")
-		return blank;
-
-	else if (is_string_binary(s))
+	if (is_string_binary(s))
 		return binary;
-	else if (is_string_positive_integer(s))
+
+	if (is_string_positive_integer(s))
 		return numeric;
 
-	else if (is_string_alphanumeric(s))
+	if (is_string_alphanumeric(s))
 		return alphanumeric;
-
 
 	return something;
 }
@@ -128,9 +125,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 
 	cout << min_params << " " << max_params << endl;
 
-
-
-	vector<string_type> string_types(max_params, something);
+	vector<string_type> string_types(max_params, blank);
 
 	for (size_t i = 0; i < params.size(); i++)
 	{
@@ -139,12 +134,12 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			if (params[i][j] == "")
 				continue;
 
+			cout << params[i][j] << endl;
+
 			string_type st = get_string_type(params[i][j]);
 
-			//if (string_types[i] == blank)
-			//	string_types[i] = st;
-			if (st < string_types[i])
-				string_types[i] = st;
+			if (string_types[j] == blank || st > string_types[j])
+				string_types[j] = st;
 		}
 	}
 
