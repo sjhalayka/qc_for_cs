@@ -147,15 +147,20 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 	for (size_t i = 0; i < string_types.size(); i++)
 	{
 		if (string_types[i] == blank)
-			cout << "blank" << endl;
+			cout << "blank";
 		else if (string_types[i] == binary)
-			cout << "binary" << endl;
+			cout << "binary";
 		else if (string_types[i] == numeric)
-			cout << "numeric" << endl;
+			cout << "numeric";
 		else if (string_types[i] == alphanumeric)
-			cout << "alphanumeric" << endl;
+			cout << "alphanumeric";
 		else if (string_types[i] == something)
-			cout << "something" << endl;
+			cout << "something";
+	
+		if (i < min_params)
+			cout << " (not optional)" << endl;
+		else
+			cout << " (optional)" << endl;
 	}
 
 	cout << endl;
