@@ -153,7 +153,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 		else if (string_types[i] == alphanumeric)
 			cout << "alphanumeric";
 		else if (string_types[i] == something)
-			cout << "something";
+			cout << "generic";
 	
 		if (i < min_params)
 			cout << " (not optional)" << endl;
