@@ -29,8 +29,6 @@ vector<string> std_strtok(const string& s, const string& regex_s)
 	return tokens;
 }
 
-enum string_type { blank = 99, binary = 1, numeric = 2, alphanumeric = 3};
-
 bool is_string_binary(const string& s)
 {
 	if (s == "")
@@ -75,8 +73,13 @@ bool is_string_alphanumeric(const string& s)
 	return true;
 }
 
+enum string_type { blank = 0, binary = 1, numeric = 2, alphanumeric = 3, something = 4 };
+
 string_type get_string_type(const string& s)
 {
+	if (s == "")
+		return blank;
+
 	if (is_string_binary(s))
 		return binary;
 
@@ -86,10 +89,10 @@ string_type get_string_type(const string& s)
 	if (is_string_alphanumeric(s))
 		return alphanumeric;
 
-	return blank;
+
+
+	return something;
 }
-
-
 
 void analyze_instruction_and_params(const string& instruction, vector<vector<string>> params)
 {
@@ -98,9 +101,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 	for (size_t i = 0; i < params.size(); i++)
 	{
 		for (size_t j = 0; j < params[i].size(); j++)
-		{
 			cout << params[i][j] << ' ';
-		}
 
 		cout << endl;
 	}
@@ -129,22 +130,22 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 
 	cout << min_params << " " << max_params << endl;
 
-	vector<string_type> string_types(max_params, alphanumeric);
 
 
-
-
+	vector<string_type> string_types(max_params, something);
 
 	for (size_t i = 0; i < params.size(); i++)
 	{
 		for (size_t j = 0; j < params[i].size(); j++)
 		{
+			if (params[i][j] == "")
+				continue;
+
 			string_type st = get_string_type(params[i][j]);
 
-			if (st < string_types[i])
+			if (string_types[i] == something || st < string_types[i])
 				string_types[i] = st;
 		}
-
 	}
 
 	for (size_t i = 0; i < string_types.size(); i++)
@@ -157,23 +158,12 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			cout << "numeric" << endl;
 		else if (string_types[i] == alphanumeric)
 			cout << "alphanumeric" << endl;
+		else if (string_types[i] == something)
+			cout << "something" << endl;
 	}
 
 	cout << endl;
 
-	//cout << pair.first << endl;
-
-//for (size_t i = 0; i < pair.second.size(); i++)
-//{
-//	for (size_t j = 0; j < pair.second[i].size(); j++)
-//	{
-//		cout << pair.second[i][j] << ' ';
-//	}
-
-//	cout << endl;
-//}
-
-//cout << endl;
 }
 
 
