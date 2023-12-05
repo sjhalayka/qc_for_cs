@@ -101,8 +101,6 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 		cout << endl;
 	}
 
-	cout << endl;
-
 	size_t min_params = static_cast<size_t>(-1); // Casting turns it into the biggest integer value
 	size_t max_params = 0;
 
@@ -123,7 +121,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			params[i].push_back("");
 	}
 
-	cout << min_params << " " << max_params << endl;
+//	cout << min_params << " " << max_params << endl;
 
 	vector<string_type> string_types(max_params, blank);
 
@@ -134,7 +132,7 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			if (params[i][j] == "")
 				continue;
 
-			cout << params[i][j] << endl;
+			//cout << params[i][j] << endl;
 
 			string_type st = get_string_type(params[i][j]);
 
