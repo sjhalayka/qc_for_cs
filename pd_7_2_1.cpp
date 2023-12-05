@@ -2,9 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <fstream>
 #include <map>
-#include <unordered_map>
 #include <cctype>
 using namespace std;
 
@@ -94,10 +92,12 @@ string_type get_string_type(const string& s)
 
 void analyze_instruction_and_params(const string& instruction, vector<vector<string>> params)
 {
-	cout << instruction << endl;
+	cout << "Instruction: " << instruction << endl;
 
 	for (size_t i = 0; i < params.size(); i++)
 	{
+		cout << "Parameters: ";
+
 		for (size_t j = 0; j < params[i].size(); j++)
 			cout << params[i][j] << ' ';
 
@@ -124,8 +124,6 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			params[i].push_back("");
 	}
 
-	//	cout << min_params << " " << max_params << endl;
-
 	vector<string_type> string_types(max_params, blank);
 
 	for (size_t i = 0; i < params.size(); i++)
@@ -135,14 +133,14 @@ void analyze_instruction_and_params(const string& instruction, vector<vector<str
 			if (params[i][j] == "")
 				continue;
 
-			//cout << params[i][j] << endl;
-
 			string_type st = get_string_type(params[i][j]);
 
-			if (string_types[j] == blank || st <  string_types[j])
+			if (string_types[j] == blank || st < string_types[j])
 				string_types[j] = st;
 		}
 	}
+
+	cout << "Parameter types: " << endl;
 
 	for (size_t i = 0; i < string_types.size(); i++)
 	{
