@@ -33,7 +33,7 @@ float knuth(
 
 int main(void)
 {
-	const int n = 60;
+	const size_t n = 60;
 
 	bitset<n> alice_bit_sent;
 	bitset<n> alice_sending_basis;
