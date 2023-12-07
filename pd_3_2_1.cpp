@@ -28,10 +28,10 @@ int main(void)
 	const int n = 3;
 
 	MatrixXf adjacency_matrix(n, n); // aka M^1
-	adjacency_matrix <<
+	adjacency_matrix << // See equation 3.14
 		0,           1.0f / 6.0f, 5.0f / 6.0f,
 		1.0f / 3.0f, 1.0f / 2.0f, 1.0f / 6.0f,
-		2.0f / 3.0f, 1.0f / 3.0f, 0;
+		2.0f / 3.0f, 1.0f / 3.0f, 0; 
 
 	cout << adjacency_matrix << endl << endl;
 
@@ -50,7 +50,7 @@ int main(void)
 	}
 
 	// Get M^k path probability, where k = 1 through 6
-	// See equation 3.25 on page 84
+	// See equations 3.22 and 3.25
 
 	cout << endl;
 
