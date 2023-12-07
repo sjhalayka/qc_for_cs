@@ -34,7 +34,7 @@ MatrixXcf get_modulus_squared(const int n, const MatrixXcf& m)
 	return ret;
 }
 
-
+// See equation 3.26
 MatrixXcf get_star_product(const int n, const MatrixXcf& m0, const MatrixXcf &m1)
 {
 	MatrixXcf ret(n, n);
@@ -43,12 +43,12 @@ MatrixXcf get_star_product(const int n, const MatrixXcf& m0, const MatrixXcf &m1
 	{
 		for (int j = 0; j < ret.rows(); j++)
 		{
-			complex<float> prod = 0;
+			complex<float> sum = 0;
 
 			for (int k = 0; k < n; k++)
-				prod += m0(i, k) * m1(k, j);
-
-			ret(i, j) = prod;
+				sum += m0(i, k) * m1(k, j);
+			
+			ret(i, j) = sum;
 		}
 	}
 
