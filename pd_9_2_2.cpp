@@ -67,6 +67,7 @@ int main(void)
 
 		cout << "Agreed bits:  ";
 
+		// In case agreed_bits_size < agreed_bits.size()
 		for(size_t j = 0; j < agreed_bits_size; j++)
 			cout << agreed_bits[j];
 		
