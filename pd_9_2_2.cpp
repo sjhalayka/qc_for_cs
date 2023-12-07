@@ -54,8 +54,8 @@ int main(void)
 
 		bitset<n> bob_receiving_basis;
 
-		for (size_t i = 0; i < n; i++)
-			bob_receiving_basis[i] = rand() % 2;
+		for (size_t j = 0; j < n; j++)
+			bob_receiving_basis[j] = rand() % 2;
 
 		bitset<n> bob_bit_received;
 		bitset<n> agreed_bits;
