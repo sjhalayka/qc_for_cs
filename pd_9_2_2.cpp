@@ -10,7 +10,8 @@ void knuth2(
 	const bitset<n>& sending_basis,
 	const bitset<n>& receiving_basis,
 	bitset<n>& bit_received,
-	bitset<n>& agreed_bits)
+	bitset<n>& agreed_bits,
+	size_t &agreed_bits_size)
 {
 	for (size_t i = 0; i < n; i++)
 	{
@@ -20,6 +21,7 @@ void knuth2(
 			bit_received[i] = rand() % 2;
 	}
 
+	agreed_bits_size = n;
 	// Todo: get agreed_bits
 }
 
@@ -56,7 +58,8 @@ int main(void)
 
 		bitset<n> bob_bit_received;
 		bitset<n> agreed_bits;
-		knuth2<n>(alice_bit_sent, alice_sending_basis, bob_receiving_basis, bob_bit_received, agreed_bits);
+		size_t agreed_bits_size = 0;
+		knuth2<n>(alice_bit_sent, alice_sending_basis, bob_receiving_basis, bob_bit_received, agreed_bits, agreed_bits_size);
 
 		cout << "Bit sent:     " << alice_bit_sent << endl;
 		cout << "Bit received: " << bob_bit_received << endl;
