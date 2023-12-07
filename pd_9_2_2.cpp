@@ -19,6 +19,8 @@ void knuth2(
 		else
 			bit_received[i] = rand() % 2;
 	}
+
+	// Todo: get agreed_bits
 }
 
 int main(void)
