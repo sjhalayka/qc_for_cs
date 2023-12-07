@@ -23,29 +23,44 @@ void knuth2(
 
 int main(void)
 {
-	const size_t n = 60;
+	// It's not ultra clear in the book whether the author is
+	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
+	// all 3-bit strings (e.g. "000"), or both, so we do both!
 
-	bitset<n> alice_bit_sent;
-	bitset<n> alice_sending_basis;
+	const size_t n = 3; // number of bits per string
 
-	for (size_t i = 0; i < n; i++)
+	vector<bitset<n>> bit_sets;
+
+	// Find all permutations of an n-bit string
+	for (size_t i = 0; i < (1 << n); i++)
+		bit_sets.push_back(bitset<n>(i));
+
+	// Process each bit string
+	for (size_t i = 0; i < bit_sets.size(); i++)
 	{
-		alice_bit_sent[i] = rand() % 2;
-		alice_sending_basis[i] = rand() % 2;
+		bitset<n> alice_bit_sent;
+		bitset<n> alice_sending_basis;
+
+		for (size_t j = 0; j < n; j++)
+		{
+			alice_bit_sent[j] = bit_sets[i][j];
+			alice_sending_basis[j] = rand() % 2;
+		}
+
+		bitset<n> bob_receiving_basis;
+
+		for (size_t i = 0; i < n; i++)
+			bob_receiving_basis[i] = rand() % 2;
+
+		bitset<n> bob_bit_received;
+		bitset<n> agreed_bits;
+		knuth2<n>(alice_bit_sent, alice_sending_basis, bob_receiving_basis, bob_bit_received, agreed_bits);
+
+		cout << "Bit sent:     " << alice_bit_sent << endl;
+		cout << "Bit received: " << bob_bit_received << endl;
+		cout << "Agreed bits:  " << agreed_bits << endl;
+		cout << endl;
 	}
-
-	bitset<n> bob_receiving_basis;
-
-	for (size_t i = 0; i < n; i++)
-		bob_receiving_basis[i] = rand() % 2;
-
-	bitset<n> bob_bit_received;
-	bitset<n> agreed_bits;
-	knuth2<n>(alice_bit_sent, alice_sending_basis, bob_receiving_basis, bob_bit_received, agreed_bits);
-
-	cout << "Bit sent:     " << alice_bit_sent << endl;
-	cout << "Bit received: " << bob_bit_received << endl;
-	cout << "Agreed bits:  " << agreed_bits << endl;
  
 	return 0;
 }
