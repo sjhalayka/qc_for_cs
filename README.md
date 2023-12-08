@@ -40,7 +40,7 @@ Drill -> Page<br>
 9.1.1 -> 264 (complete)<br>
 9.1.2 -> 266 (complete)<br>
 9.2.1 -> 271 (complete)<br>
-9.2.2 -> 273 (in progress)<br>
+9.2.2 -> 273 (complete)<br>
 9.3.1 -> 275<br>
 ---------------<br>
 10.1.1 -> 287 (complete)<br>
