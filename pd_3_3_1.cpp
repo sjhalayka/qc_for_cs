@@ -34,7 +34,7 @@ MatrixXcf get_modulus_squared(const int n, const MatrixXcf& m)
 	return ret;
 }
 
-// See equation 3.26
+
 MatrixXcf get_star_product(const int n, const MatrixXcf& m0, const MatrixXcf &m1)
 {
 	MatrixXcf ret(n, n);
@@ -46,7 +46,7 @@ MatrixXcf get_star_product(const int n, const MatrixXcf& m0, const MatrixXcf &m1
 			complex<float> sum = 0;
 
 			for (int k = 0; k < n; k++)
-				sum += m0(i, k) * m1(k, j);
+				sum += m0(i, k) * m1(k, j); // See equation 3.26
 			
 			ret(i, j) = sum;
 		}
@@ -86,7 +86,7 @@ int main(void)
 	cout << "P = " << endl << P << endl << endl;
 
 	// Get P^2
-	// See equation	3.52
+	// See equations // See equations 3.26 and 3.52
 	cout << "P^2 = " << endl << get_star_product(n, P, P) << endl << endl;
 
 	return 0;
