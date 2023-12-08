@@ -84,7 +84,7 @@ int main(void)
 		// Which indices to test for agreement?
 		vector<size_t> indices_for_agreement;
 
-		// Test roughly 1/x of the indices, where x = 2
+		// Test roughly 1/2 of the indices
 		for (size_t j = 0; j < n; j++)
 			if (rand() % 2 == 0)
 				indices_for_agreement.push_back(j);
