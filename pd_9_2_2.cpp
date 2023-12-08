@@ -45,19 +45,22 @@ void knuth2(
 
 int main(void)
 {
+	//srand(static_cast<unsigned int>(time(0)));
+
 	// It's not ultra clear in the book whether the author is
 	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
 	// all 3-bit strings (e.g. "000"), or both, so we do both!
 
-	srand(static_cast<unsigned int>(time(0)));
-
-	const size_t n = 8; //3; // number of bits per string
+	const size_t n = 3; // number of bits per string
 
 	vector<bitset<n>> bit_sets;
 
 	// Find all permutations of an n-bit string
 	for (size_t i = 0; i < (1 << n); i++)
 		bit_sets.push_back(bitset<n>(i));
+
+	float global_percent = 0;
+	int global_count = 0;
 
 	// Process each bit string
 	for (size_t i = 0; i < bit_sets.size(); i++)
@@ -78,12 +81,17 @@ int main(void)
 
 		bitset<n> bob_bit_received;
 
+		// Which indices to test for agreement?
 		vector<size_t> indices_for_agreement;
 
-		// Test roughly 1/2 of the indices
+		// Test roughly 1/x of the indices, where x = 2
 		for (size_t j = 0; j < n; j++)
 			if (rand() % 2 == 1)
 				indices_for_agreement.push_back(j);
+
+		// Make sure that there's at least one test index
+		if (indices_for_agreement.size() == 0)
+			indices_for_agreement.push_back(0);
 
 		bitset<n> agreed_bits;
 
@@ -105,11 +113,18 @@ int main(void)
 			cout << agreed_bits[j];
 
 		cout << endl;
+
+		float agreed_percent = 100.0f * static_cast<float>(agreed_bits.count()) / indices_for_agreement.size();
+
+		global_percent += agreed_percent;
+		global_count++;
 		
-		cout << "Agreement %:  " << 100.0f * static_cast<float>(agreed_bits.count()) / indices_for_agreement.size() << endl;
+		cout << "Agreement %:  " << agreed_percent << endl;
 
 		cout << endl << endl;
 	}
+
+	cout << "Mean agreement %: " << global_percent / global_count << endl;
  
 	return 0;
 }
