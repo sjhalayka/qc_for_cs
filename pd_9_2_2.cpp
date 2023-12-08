@@ -49,6 +49,8 @@ int main(void)
 	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
 	// all 3-bit strings (e.g. "000"), or both, so we do both!
 
+	srand(static_cast<unsigned int>(time(0)));
+
 	const size_t n = 8; //3; // number of bits per string
 
 	vector<bitset<n>> bit_sets;
@@ -78,6 +80,7 @@ int main(void)
 
 		vector<size_t> indices_for_agreement;
 
+		// Test roughly 1/2 of the indices
 		for (size_t j = 0; j < n; j++)
 			if (rand() % 2 == 1)
 				indices_for_agreement.push_back(j);
@@ -100,7 +103,11 @@ int main(void)
 
 		for(size_t j = 0; j < indices_for_agreement.size(); j++)
 			cout << agreed_bits[j];
+
+		cout << endl;
 		
+		cout << "Agreement %:  " << 100.0f * static_cast<float>(agreed_bits.count()) / indices_for_agreement.size() << endl;
+
 		cout << endl << endl;
 	}
  
