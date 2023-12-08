@@ -9,20 +9,6 @@ using Eigen::VectorXcf;
 using Eigen::MatrixXcf;
 
 
-MatrixXcf get_mk_mul(const int n, const int k, const MatrixXcf& adjacency_matrix)
-{
-	if (k == 1)
-		return adjacency_matrix;
-
-	MatrixXcf ret(n, n);
-	ret = adjacency_matrix;
-
-	for (int i = 1; i < k; i++)
-		ret = ret * adjacency_matrix;
-
-	return ret;
-}
-
 MatrixXcf get_modulus_squared(const int n, const MatrixXcf& m)
 {
 	MatrixXcf ret(n, n);
@@ -34,7 +20,8 @@ MatrixXcf get_modulus_squared(const int n, const MatrixXcf& m)
 	return ret;
 }
 
-
+// This is the same as the regular matrix product from Eigen
+// Is that how it's supposed to be?
 MatrixXcf get_star_product(const int n, const MatrixXcf& m0, const MatrixXcf &m1)
 {
 	MatrixXcf ret(n, n);
@@ -67,8 +54,8 @@ int main(void)
 	// See equation 3.50
 	MatrixXcf P(n, n);
 
-	const complex<float> u = 1.0f;
-	const complex<float> a = u / sqrtf(2.0f);
+	const complex<float> u = complex<float>( 1.0f,  0.0f);
+	const complex<float> a = complex<float>( 1.0f,  0.0f) / sqrtf(2.0f);
 	const complex<float> b = complex<float>(-1.0f,  1.0f) / sqrtf(6.0f);
 	const complex<float> c = complex<float>(-1.0f, -1.0f) / sqrtf(6.0f);
 	const complex<float> d = complex<float>( 1.0f, -1.0f) / sqrtf(6.0f);
@@ -86,7 +73,7 @@ int main(void)
 	cout << "P = " << endl << P << endl << endl;
 
 	// Get P^2
-	// See equations // See equations 3.26 and 3.52
+	// See equations 3.26 and 3.52
 	cout << "P^2 = " << endl << get_star_product(n, P, P) << endl << endl;
 
 	return 0;
