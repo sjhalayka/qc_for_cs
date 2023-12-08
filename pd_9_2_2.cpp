@@ -29,7 +29,9 @@ void knuth2(
 	{
 		const size_t index = test_agreed_indices[i];
 
-		if (bit_sent[index] == bit_received[index] && sending_basis[index] == receiving_basis[index])
+		// Does qubit match?
+		if (bit_sent[index] == bit_received[index] && 
+			sending_basis[index] == receiving_basis[index])
 		{
 			agreed_bits[agreed_bits_index] = 1;
 			agreed_bits_index++;
