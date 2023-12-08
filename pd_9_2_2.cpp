@@ -29,7 +29,7 @@ void knuth2(
 	{
 		const size_t index = test_agreed_indices[i];
 
-		if (bit_sent[index] == bit_received[index])
+		if (bit_sent[index] == bit_received[index] && sending_basis[index] == receiving_basis[index])
 		{
 			agreed_bits[agreed_bits_index] = 1;
 			agreed_bits_index++;
@@ -44,13 +44,14 @@ void knuth2(
 
 int main(void)
 {
+	// Also see the Mersenne Twister implementation in the C++ standard
 	srand(static_cast<unsigned int>(time(0)));
 
 	// It's not ultra clear in the book whether the author is
 	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
 	// all 3-bit strings (e.g. "000"), or both, so we do both!
 
-	const size_t n = 3; // number of bits per string
+	const size_t n = 8; // number of bits per string
 
 	vector<bitset<n>> bit_sets;
 
