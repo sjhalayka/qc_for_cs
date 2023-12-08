@@ -49,7 +49,6 @@ int main(void)
 	//std::cout << std::setprecision(5);
 
 	const int n = 8;
-	const int k = 6;
 
 	// See equation 3.50
 	MatrixXcf P(n, n);
