@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 
@@ -20,9 +22,6 @@ void knuth2(
 		else
 			bit_received[i] = rand() % 2;
 	}
-
-	// Todo: get agreed_bits
-	size_t agreed_bits_size = test_agreed_indices.size();
 
 	size_t agreed_bits_index = 0;
 
@@ -45,7 +44,7 @@ void knuth2(
 
 int main(void)
 {
-	//srand(static_cast<unsigned int>(time(0)));
+	srand(static_cast<unsigned int>(time(0)));
 
 	// It's not ultra clear in the book whether the author is
 	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
@@ -86,7 +85,7 @@ int main(void)
 
 		// Test roughly 1/x of the indices, where x = 2
 		for (size_t j = 0; j < n; j++)
-			if (rand() % 2 == 1)
+			if (rand() % 2 == 0)
 				indices_for_agreement.push_back(j);
 
 		// Make sure that there's at least one test index
