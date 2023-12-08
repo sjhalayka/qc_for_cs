@@ -1,5 +1,7 @@
 Quantum Computing for Computer Scientists -- Programming Drills
 
+Requires Eigen C++ header-only library -- https://eigen.tuxfamily.org/
+
 Drill -> Page<br>
 ---------------<br>
 1.1.1 -> 9 (complete)<br>
