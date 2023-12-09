@@ -45,11 +45,15 @@ int main(void)
 	for (int i = 0; i < ces.eigenvalues().rows(); i++)
 	{
 		const float p = ces.eigenvalues().row(i).col(0)(0).real();
-		entropy += p * log(p);
+		entropy += p * logf(p);
 	}
 
-	cout << "von Neumann entropy is: " << -entropy / log(2.0) << endl;
+	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl;
 
+	cout << "Eigenvectors are: " << endl;
+
+	for (int i = 0; i < ces.eigenvectors().rows(); i++)
+		cout << ces.eigenvectors().row(i) << endl;
 
 	return 0;
 
