@@ -51,7 +51,7 @@ int main(void)
 
 
 	// Get probabilities
-	vector<float> probabilities(n, 0.0f);
+	vector<float> probabilities(n);
 
 
 	// Spice things up with a pseudorandom PDF
