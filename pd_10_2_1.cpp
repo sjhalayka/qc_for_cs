@@ -37,7 +37,8 @@ int main(void)
 
 	// Calculate density matrix
 	MatrixXcf D(num_symbols, num_symbols);
-	D = p1 * w1 * w1.transpose() + p2 * w2 * w2.transpose();
+	D = p1 * w1 * w1.transpose() + 
+		p2 * w2 * w2.transpose();
 
 	ComplexEigenSolver<MatrixXcf> ces(D);
 
