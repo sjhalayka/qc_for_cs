@@ -24,6 +24,8 @@ int main(void)
 	basis_one(0) = complex<float>(0, 0);
 	basis_one(1) = complex<float>(1, 0);
 
+	const size_t num_symbols = 2;
+
 	// See example 10.2.2
 	const float p1 = 1.0f / 3.0f;
 	const float p2 = 2.0f / 3.0f;
@@ -34,7 +36,7 @@ int main(void)
 	VectorXcf w2 = basis_zero;
 
 	// Calculate density matrix
-	MatrixXcf D(2, 2);
+	MatrixXcf D(num_symbols, num_symbols);
 	D = p1 * w1 * w1.transpose() + p2 * w2 * w2.transpose();
 
 	ComplexEigenSolver<MatrixXcf> ces(D);
@@ -51,6 +53,8 @@ int main(void)
 
 		cout << p << endl;
 	}
+
+	cout << endl;
 
 	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl << endl;
 
