@@ -36,7 +36,7 @@ int main(void)
 	MatrixXcf D(2, 2);
 	D = p1 * w1 * w1.transpose() + p2 * w2 * w2.transpose();
 
-	cout << D << endl << endl;
+	//cout << D << endl << endl;
 
 	ComplexEigenSolver<MatrixXcf> ces(D);
 
@@ -44,11 +44,8 @@ int main(void)
 
 	for (int i = 0; i < ces.eigenvalues().rows(); i++)
 	{
-		VectorXcf v = ces.eigenvalues().row(i).col(0);
-		complex<float> cf = v(0);
-		float f = cf.real();
-
-		entropy += f * log(f);
+		const float p = ces.eigenvalues().row(i).col(0)(0).real();
+		entropy += p * log(p);
 	}
 
 	cout << "von Neumann entropy is: " << -entropy / log(2.0) << endl;
