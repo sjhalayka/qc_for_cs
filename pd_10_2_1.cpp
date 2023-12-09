@@ -13,9 +13,6 @@ using Eigen::MatrixXcf;
 using Eigen::ComplexEigenSolver;
 
 
-
-// https://physics.stackexchange.com/questions/377089/is-there-a-clear-and-intuitive-meaning-to-the-eigenvectors-and-eigenvalues-of-a
-
 int main(void)
 {
 	// Standard bases
@@ -47,13 +44,17 @@ int main(void)
 	// Calculate von Neumann entropy
 	float entropy = 0;
 
+	cout << "Eigenvalues are: " << endl;
+
 	for (int i = 0; i < ces.eigenvalues().rows(); i++)
 	{
 		const float p = ces.eigenvalues().row(i).col(0)(0).real();
 		entropy += p * logf(p);
+
+		cout << p << endl;
 	}
 
-	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl;
+	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl << endl;
 
 	cout << "Eigenvectors are: " << endl;
 
@@ -76,7 +77,7 @@ int main(void)
 	{
 		for (size_t j = 0; j < bases[i].size(); j++)
 		{
-			cout << bases[i][j] << endl;
+			cout << bases[i][j] << ' ';
 		}
 
 		cout << endl;
