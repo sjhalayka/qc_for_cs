@@ -51,10 +51,9 @@ int main(void)
 
 
 	// Get probabilities
+	// Spice things up with a pseudorandom PDF
 	vector<float> probabilities(n);
 
-
-	// Spice things up with a pseudorandom PDF
 	srand(static_cast<unsigned int>(time(0)));
 
 	for (size_t i = 0; i < n; i++)
