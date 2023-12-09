@@ -65,7 +65,7 @@ int main(void)
 		for (int j = 0; j < ces.eigenvectors().row(i).cols(); j++)
 		{
 			base.push_back(ces.eigenvectors().row(i).col(j)(0).real());
-			//base.push_back(ces.eigenvectors().row(i).col(j)(0).imag());
+			//base.push_back(ces.eigenvectors().row(i).col(j)(0).imag()); // always zero?
 		}
 
 		bases.push_back(base);
