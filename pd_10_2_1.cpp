@@ -70,6 +70,7 @@ int main(void)
 
 
 	// Calculate density matrix
+	// See equation 10.13
 	MatrixXcf density_matrix(n, n);
 	density_matrix.setZero();
 
