@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <random>
 using namespace std;
 
 #include "Eigen/Dense"
@@ -22,7 +23,6 @@ int main(void)
 	// 
 	// Here we will use a distinct base for each message
 	const size_t n = 4;
-
 
 	// Initialize orthogonal bases
 	vector<VectorXcf> orthogonal_bases(n);
@@ -52,12 +52,14 @@ int main(void)
 
 	// Get probabilities
 	// Spice things up with a pseudorandom PDF
+	// Use Mersenne Twister for the pseudorandom number generator
 	vector<float> probabilities(n);
 
-	srand(static_cast<unsigned int>(time(0)));
+	mt19937 mt;
+	mt.seed(static_cast<unsigned int>(time(0)));
 
 	for (size_t i = 0; i < n; i++)
-		probabilities[i] = static_cast<float>(rand()%256 + 1);
+		probabilities[i] = static_cast<float>(mt()%256 + 1);
 
 	float grand_total = 0;
 
@@ -69,9 +71,9 @@ int main(void)
 
 
 	// Calculate density matrix
-	// See equation 10.13
+	// See equation 10.14
 	MatrixXcf density_matrix(n, n);
-	density_matrix.setZero();
+	density_matrix.setZero(); // IMPORTANT
 
 	for (size_t i = 0; i < n; i++)
 		density_matrix += probabilities[i] * messages[i] * messages[i].transpose();
