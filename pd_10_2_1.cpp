@@ -18,7 +18,9 @@ int main(void)
 {
 	// The width and height of the density matrix depends on the 
 	// number of orthogonal bases n. The number of eigenvalues and
-	// eigenvectors are both n as well
+	// eigenvectors are both n as well.
+	// 
+	// Here we will use a distinct base for each message
 	const size_t n = 4;
 
 
@@ -69,15 +71,14 @@ int main(void)
 
 	// Calculate density matrix
 	MatrixXcf density_matrix(n, n);
+	density_matrix.setZero();
 
-	density_matrix = probabilities[0] * messages[0] * messages[0].transpose();
-
-	for (size_t i = 1; i < n; i++)
+	for (size_t i = 0; i < n; i++)
 		density_matrix += probabilities[i] * messages[i] * messages[i].transpose();
 
 
 	// For getting eigenvalues and eigenvectors
-	ComplexEigenSolver<MatrixXcf> ces(density_matrix);
+	const ComplexEigenSolver<MatrixXcf> ces(density_matrix);
 
 
 	// Calculate von Neumann entropy
