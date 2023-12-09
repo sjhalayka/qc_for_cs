@@ -16,9 +16,11 @@ using Eigen::ComplexEigenSolver;
 
 int main(void)
 {
-	// The size of the density matrix depends on the number of orthogonal bases n,
-	// isomuch that the number of eigenvalues and eigenvectors are both n as well
+	// The width and height of the density matrix depends on the 
+	// number of orthogonal bases n. The number of eigenvalues and
+	// eigenvectors are both n as well
 	const size_t n = 4;
+
 
 	// Initialize orthogonal bases
 	vector<VectorXcf> orthogonal_bases(n);
@@ -38,20 +40,23 @@ int main(void)
 		orthogonal_bases[i] = base;
 	}
 
+
 	// Intialize messages
 	vector<VectorXcf> messages(n);
 
 	for (size_t i = 0; i < n; i++)
 		messages[i] = orthogonal_bases[i];
 
+
 	// Get probabilities
 	vector<float> probabilities(n, 0.0f);
+
 
 	// Spice things up with a pseudorandom PDF
 	srand(static_cast<unsigned int>(time(0)));
 
 	for (size_t i = 0; i < n; i++)
-		probabilities[i] = static_cast<float>(rand() % 256 + 1);
+		probabilities[i] = static_cast<float>(rand()%256 + 1);
 
 	float grand_total = 0;
 
@@ -61,6 +66,7 @@ int main(void)
 	for (size_t i = 0; i < n; i++)
 		probabilities[i] /= grand_total;
 
+
 	// Calculate density matrix
 	MatrixXcf density_matrix(n, n);
 
@@ -69,8 +75,10 @@ int main(void)
 	for (size_t i = 1; i < n; i++)
 		density_matrix += probabilities[i] * messages[i] * messages[i].transpose();
 
+
 	// For getting eigenvalues and eigenvectors
 	ComplexEigenSolver<MatrixXcf> ces(density_matrix);
+
 
 	// Calculate von Neumann entropy
 	float entropy = 0;
@@ -88,6 +96,7 @@ int main(void)
 	cout << endl;
 
 	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl << endl;
+
 
 	cout << "Eigenvectors are: " << endl;
 
