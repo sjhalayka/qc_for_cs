@@ -37,8 +37,6 @@ int main(void)
 	MatrixXcf D(2, 2);
 	D = p1 * w1 * w1.transpose() + p2 * w2 * w2.transpose();
 
-	//cout << D << endl << endl;
-
 	ComplexEigenSolver<MatrixXcf> ces(D);
 
 	// Calculate von Neumann entropy
@@ -67,7 +65,7 @@ int main(void)
 		for (int j = 0; j < ces.eigenvectors().row(i).cols(); j++)
 		{
 			base.push_back(ces.eigenvectors().row(i).col(j)(0).real());
-			base.push_back(ces.eigenvectors().row(i).col(j)(0).imag());
+			//base.push_back(ces.eigenvectors().row(i).col(j)(0).imag());
 		}
 
 		bases.push_back(base);
