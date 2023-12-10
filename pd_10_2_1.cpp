@@ -94,14 +94,12 @@ int main(void)
 		
 		cout << p << endl;
 		
-		entropy += p * log(p);
-
-//		cout << p << endl;
+		entropy += p * log(1.0f/p);
 	}
 
 	cout << endl;
 
-	cout << "von Neumann entropy is: " << -entropy / logf(2.0f) << endl << endl;
+	cout << "von Neumann entropy is: " << entropy / logf(2.0f) << endl << endl;
 
 
 	cout << "Eigenvectors are: " << endl;
