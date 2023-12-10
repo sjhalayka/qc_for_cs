@@ -20,6 +20,7 @@ int main(void)
 	// 
 	// Here we will use a distinct base for each message
 	// simply because we can do so
+
 	const size_t n = 4;
 
 	// Initialize orthogonal bases
@@ -28,6 +29,18 @@ int main(void)
 	for (size_t i = 0; i < n; i++)
 	{
 		VectorXcf base(n);
+
+		// Note:
+		// Keeping things real and orthogonal means that the
+		// density matrix is zero outside of the diagonal,
+		// and that the entries for the diagonal are the
+		// eigenvalues
+		//
+		// If it's not orthogonal, then the density matrix
+		// is generally non-zero outside of the diagonal, 
+		// and the entries for the diagonal are not the eigenvalues
+		//
+		// If it's imaginary, then the entropy becomes complex
 
 		for (size_t j = 0; j < n; j++)
 		{
