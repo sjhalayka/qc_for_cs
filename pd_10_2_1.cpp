@@ -19,6 +19,7 @@ int main(void)
 	// eigenvectors are both n as well.
 	// 
 	// Here we will use a distinct base for each message
+	// simply because we can do so
 	const size_t n = 4;
 
 	// Initialize orthogonal bases
@@ -56,7 +57,7 @@ int main(void)
 	mt.seed(static_cast<unsigned int>(time(0)));
 
 	for (size_t i = 0; i < n; i++)
-		probabilities[i] = static_cast<float>(mt()%256 + 1);
+		probabilities[i] = static_cast<float>(mt()%256 + 1); // Larger than zero
 
 	float grand_total = 0;
 
