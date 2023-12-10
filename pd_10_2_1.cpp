@@ -32,7 +32,7 @@ int main(void)
 		for (size_t j = 0; j < n; j++)
 		{
 			if (i == j)
-				base(j) = complex<float>(1, 0);
+				base(j) = complex<float>(0, 1);
 			else
 				base(j) = complex<float>(0, 0);
 		}
@@ -56,13 +56,13 @@ int main(void)
 	mt19937 mt;
 	mt.seed(static_cast<unsigned int>(time(0)));
 
-	for (size_t i = 0; i < n; i++)
-		probabilities[i] = static_cast<float>(mt()%256 + 1); // Larger than zero
-
 	float grand_total = 0;
 
 	for (size_t i = 0; i < n; i++)
+	{
+		probabilities[i] = static_cast<float>(mt() % 256 + 1); // Larger than zero
 		grand_total += probabilities[i];
+	}
 
 	for (size_t i = 0; i < n; i++)
 		probabilities[i] /= grand_total;
