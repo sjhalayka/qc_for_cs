@@ -32,7 +32,7 @@ int main(void)
 		for (size_t j = 0; j < n; j++)
 		{
 			if (i == j)
-				base(j) = complex<float>(0, 1);
+				base(j) = complex<float>(1, 0);
 			else
 				base(j) = complex<float>(0, 0);
 		}
