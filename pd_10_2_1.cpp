@@ -76,22 +76,27 @@ int main(void)
 	for (size_t i = 0; i < n; i++)
 		density_matrix += probabilities[i] * messages[i] * messages[i].transpose();
 
+	cout << "Density matrix =" << endl << density_matrix << endl << endl;
+
 
 	// For getting eigenvalues and eigenvectors
 	const ComplexEigenSolver<MatrixXcf> ces(density_matrix);
 
 
 	// Calculate von Neumann entropy
-	float entropy = 0;
+	complex<float> entropy = 0;
 
 	cout << "Eigenvalues are: " << endl;
 
 	for (int i = 0; i < ces.eigenvalues().rows(); i++)
 	{
-		const float p = ces.eigenvalues().row(i).col(0)(0).real();
-		entropy += p * logf(p);
-
+		const complex<float> p = ces.eigenvalues().row(i).col(0)(0);
+		
 		cout << p << endl;
+		
+		entropy += p * log(p);
+
+//		cout << p << endl;
 	}
 
 	cout << endl;
@@ -101,14 +106,14 @@ int main(void)
 
 	cout << "Eigenvectors are: " << endl;
 
-	vector<vector<float>> bases;
+	vector<vector<complex<float>>> bases;
 
 	for (int i = 0; i < ces.eigenvectors().rows(); i++)
 	{
-		vector<float> base;
+		vector<complex<float>> base;
 
 		for (int j = 0; j < ces.eigenvectors().row(i).cols(); j++)
-			base.push_back(ces.eigenvectors().row(i).col(j)(0).real());
+			base.push_back(ces.eigenvectors().row(i).col(j)(0));
 
 		bases.push_back(base);
 	}
