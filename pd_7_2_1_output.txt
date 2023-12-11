@@ -1,0 +1,55 @@
+Instruction: APPLY
+Parameters: U R 
+Parameters: CNOT R 
+Parameter types: 
+alphanumeric (not optional)
+alphanumeric (not optional)
+
+Instruction: IF
+Parameters: RES==[10] THEN APPLY CNOT R ELSE APPLY H R 
+Parameter types: 
+generic (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+
+Instruction: INITIALIZE
+Parameters: R1 
+Parameters: R1 B 
+Parameters: R 2 
+Parameter types: 
+alphanumeric (not optional)
+alphanumeric (optional)
+
+Instruction: MEASURE
+Parameters: S1 RES 
+Parameters: R RES 
+Parameter types: 
+alphanumeric (not optional)
+alphanumeric (not optional)
+
+Instruction: SELECT
+Parameters: S1 R 0 1 
+Parameter types: 
+alphanumeric (not optional)
+alphanumeric (not optional)
+binary (not optional)
+binary (not optional)
+
+Instruction: U
+Parameters: TENSOR H I2 
+Parameter types: 
+alphanumeric (not optional)
+alphanumeric (not optional)
+alphanumeric (not optional)
+
+Instruction: var
+Parameters: B=[00001111] 
+Parameter types: 
+generic (not optional)
+
