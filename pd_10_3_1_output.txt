@@ -1,0 +1,2 @@
+Typical count of ones = 2
+28 of 256 strings are typical
