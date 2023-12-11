@@ -53,3 +53,5 @@ procedure grover(int n) {
   reset;                // clean up local registers
 }
 
+
+grover(123);
