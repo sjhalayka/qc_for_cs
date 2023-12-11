@@ -1,0 +1,4 @@
+Message bits:      101001
+One time pad bits: 010101
+Encrypted bits:    111100
+Decrypted bits:    101001
