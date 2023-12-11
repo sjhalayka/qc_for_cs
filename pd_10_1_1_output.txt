@@ -1,0 +1,26 @@
+Character: ' ', Count: 1, Probability: 0.0909091
+*******
+
+Character: 'H', Count: 1, Probability: 0.0909091
+*******
+
+Character: 'd', Count: 1, Probability: 0.0909091
+*******
+
+Character: 'e', Count: 1, Probability: 0.0909091
+*******
+
+Character: 'l', Count: 3, Probability: 0.272727
+*********************
+
+Character: 'o', Count: 2, Probability: 0.181818
+**************
+
+Character: 'r', Count: 1, Probability: 0.0909091
+*******
+
+Character: 'w', Count: 1, Probability: 0.0909091
+*******
+
+Total probability:      1
+Binary Shannon entropy: 2.84535
