@@ -71,9 +71,17 @@ int main(void)
 
 	cout << "P = " << endl << P << endl << endl;
 
+	
+
 	// Get P^2
 	// See equations 3.26 and 3.52
-	cout << "P^2 = " << endl << get_star_product(n, P, P) << endl << endl;
+	MatrixXcf P2(n, n);
+	P2 = get_star_product(n, P, P);
+
+	cout << "P^2 = " << endl << P2 << endl << endl;
+
+	// See equation 3.53
+	cout << "|P^2|^2 = " << endl << get_modulus_squared(n, P2) << endl << endl;
 
 	return 0;
 }
