@@ -26,7 +26,7 @@ Drill -> Page<br>
 3.1.1 -> 79 (complete)<br>
 3.2.1 -> 88 (complete)<br>
 3.2.2 -> 88<br>
-3.3.1 -> 97 (in progress)<br>
+3.3.1 -> 97 (complete)<br>
 3.3.2 -> 97<br>
 ---------------<br>
 4.1.1 -> 115<br>
