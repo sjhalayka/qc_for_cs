@@ -53,7 +53,7 @@ int main(void)
 	// looking for all 3 bit strings (e.g. alice_bit_sent, etc) or 
 	// all 3-bit strings (e.g. "000"), or both, so we do both!
 
-	const size_t n = 3; // number of bits per string
+	const size_t n = 3;// 3; // number of bits per string
 
 	vector<bitset<n>> bit_sets;
 
